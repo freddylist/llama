@@ -1,10 +1,10 @@
 
-local immutable = {}
+local llama = {}
 
 local None = newproxy(true)
-getmetatable(None).__tostring = function() return "Immutable.None" end
+getmetatable(None).__tostring = function() return "Llama.None" end
 
-function immutable.isEmpty(chair)
+function llama.isEmpty(chair)
 	return next(chair) == nil
 end
 
@@ -165,22 +165,6 @@ function List.filterMap(list, filterMapper)
 	return filterMapped
 end
 
---[[function List.foldRight(list, initial, accumulator)
-	local result = {}
-
-
-	
-	return result
-end
-
-function List.foldLeft(list, initial, accumulator)
-	local result = {}
-
-
-	
-	return result
-end]]
-
 function List.find(list, value)
 	for i = 0, #list do
 		if list[i] == value then
@@ -213,21 +197,6 @@ function List.findLastFrom(list, from, value)
 	end
 end
 
-function List.findAll(list, value)
-	local indices = {}
-
-	local index = 1
-
-	for i = 1, #list do
-		if list[i] == value then
-			indices[index] = i
-			index = index + 1
-		end
-	end
-
-	return indices
-end
-
 function List.findWhere(list, predicate)
 	for i = 1, #list do
 		if predicate(list[i], i) then
@@ -258,21 +227,6 @@ function List.findWhereLastFrom(list, from, predicate)
 			return list[i]
 		end
 	end
-end
-
-function List.findAllWhere(list, predicate)
-	local indices = {}
-
-	local index = 1
-
-	for i = 1, #list do
-		if predicate(list[i], i) then
-			indices[index] = i
-			index = index + 1
-		end
-	end
-
-	return indices
 end
 
 function List.toSet(list)
@@ -385,34 +339,71 @@ end
 
 function List.replaceIndex(list, index, value)
 	local result = {}
-	local previousValue
+	local removedValue
 
-
+	for i = 1, #list do
+		if i == index then
+			removedValue = list[i]
+		else
+			result[i] = list[i]
+		end
+	end
 	
-	return result, previousValue
+	return result, removedValue
 end
 
-function List.replaceRange(list, from, to, replacement)
+function List.insertValue(list, index, insertion)
 	local result = {}
 
+	local resultIndex = 1
 
+	for i = 1, #list do
+		if i == index then
+			result[resultIndex] = insertion
+			resultIndex = resultIndex + 1
+		end
+
+		result[resultIndex] = list[i]
+		resultIndex = resultIndex + 1
+	end
 	
 	return result
 end
 
-function List.insert(list, index, insertion)
+function List.insertList(list, index, insertion)
 	local result = {}
 
+	local resultIndex = 1
 
+	for i = 1, #list do
+		if i == index then
+			for j = 1, #insertion do
+				result[resultIndex] = insertion[j]
+				resultIndex = resultIndex + 1
+			end
+		end
+		
+		result[resultIndex] = list[i]
+		resultIndex = resultIndex + 1
+	end
 	
 	return result
 end
 
 function List.subList(list, from, to)
-	
+	local result = {}
+
+	local index = 1
+
+	for i = from, to do
+		result[index] = list[i]
+		index = index + 1
+	end
+
+	return result
 end
 
-immutable.Dictionary = Dictionary
-immutable.List = List
+llama.Dictionary = Dictionary
+llama.List = List
 
-return immutable
+return llama
