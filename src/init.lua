@@ -2,7 +2,9 @@
 local llama = {}
 
 local None = newproxy(true)
-getmetatable(None).__tostring = function() return "Llama.None" end
+getmetatable(None).__tostring = function() 
+	return "Llama.None" 
+end
 
 function llama.isEmpty(chair)
 	return next(chair) == nil
@@ -15,7 +17,7 @@ function Dictionary.join(...)
 
 	for dictionaryIndex = 1, select("#", ...) do
 		for key, value in pairs(select(dictionaryIndex, ...)) do
-			if (value == None) then
+			if value == None then
 				joined[key] = nil
 			else
 				joined[key] = value
@@ -174,7 +176,7 @@ function List.find(list, value)
 end
 
 function List.findFrom(list, from, value)
-	for i = 0, #list do
+	for i = from, #list do
 		if list[i] == value then
 			return list[i]
 		end
@@ -337,19 +339,20 @@ function List.removeValues(list, values)
 	return result, removedIndices
 end
 
-function List.replaceIndex(list, index, value)
+function List.set(list, index, value)
 	local result = {}
-	local removedValue
+	local replacedValue
 
 	for i = 1, #list do
 		if i == index then
-			removedValue = list[i]
+			replacedValue = list[i]
+			result[i] = value
 		else
 			result[i] = list[i]
 		end
 	end
 	
-	return result, removedValue
+	return result, replacedValue
 end
 
 function List.insertValue(list, index, insertion)
