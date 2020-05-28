@@ -1,0 +1,20 @@
+[[describe.args]]
+type = "string"
+
+[[describe.args]]
+type = "function"
+
+[[expect.args]]
+type = "any"
+
+[[it.args]]
+type = "string"
+
+[[it.args]]
+type = "function"
+
+[HACK_NO_XPCALL]
+args = []
+
+[__LEMUR__]
+property = true
