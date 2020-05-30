@@ -1,5 +1,5 @@
 
-local join = require(script.Parent:WaitForChild("join"))
+local join = require(script.Parent.join)
 
 local function flatMap(dictionary, mapper)
 	local new = {}

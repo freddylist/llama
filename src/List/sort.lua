@@ -1,5 +1,5 @@
 
-local copy = require(script.Parent:WaitForChild("copy"))
+local copy = require(script.Parent.copy)
 
 local function sort(list, comparator)
 	local new = copy(list)

@@ -1,5 +1,5 @@
 
-local equalObjects = require(script.Parent.Parent:WaitForChild("EqualObjects"))
+local equalObjects = require(script.Parent.Parent.EqualObjects)
 
 local function equals(...)
 	if equalObjects(...) then

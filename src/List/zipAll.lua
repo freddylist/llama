@@ -1,5 +1,5 @@
 
-local None = require(script.Parent.Parent:WaitForChild("None"))
+local None = require(script.Parent.Parent.None)
 
 local function zipAll(...)
 	local new = {}

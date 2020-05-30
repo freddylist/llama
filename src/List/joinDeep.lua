@@ -1,6 +1,6 @@
 
-local None = require(script.Parent.Parent:WaitForChild("None"))
-local copyDeep = require(script.Parent:WaitForChild("copyDeep"))
+local None = require(script.Parent.Parent.None)
+local copyDeep = require(script.Parent.copyDeep)
 
 local function joinDeep(...)
 	local new = {}

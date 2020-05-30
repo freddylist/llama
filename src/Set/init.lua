@@ -1,11 +1,11 @@
 
-local Dictionary = require(script.Parent.Parent:WaitForChild("Dictionary"))
+local Dictionary = require(script.Parent.Parent.Dictionary)
 
 local Set = {
-	add			= require(script:WaitForChild("add")),
-	intersect	= require(script:WaitForChild("intersect")),
-	subtract	= require(script:WaitForChild("subtract")),
-	union		= require(script:WaitForChild("union")),
+	add			= require(script.add),
+	intersect	= require(script.intersect),
+	subtract	= require(script.subtract),
+	union		= require(script.union),
 
 	copy = Dictionary.copy,
 	keys = Dictionary.keys,

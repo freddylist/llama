@@ -1,13 +1,13 @@
 
 local Llama = {
-	Dictionary		= require(script:WaitForChild("Dictionary")),
-	List			= require(script:WaitForChild("List")),
-	Set				= require(script:WaitForChild("Set")),
+	Dictionary		= require(script.Dictionary),
+	List			= require(script.List),
+	Set				= require(script.Set),
 
-	isEmpty			= require(script:WaitForChild("isEmpty")),
-	equalObjects	= require(script:WaitForChild("equalObjects")),
+	isEmpty			= require(script.isEmpty),
+	equalObjects	= require(script.equalObjects),
 
-	None			= require(script:WaitForChild("None")),
+	None			= require(script.None),
 }
 
 return Llama

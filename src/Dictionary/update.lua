@@ -1,5 +1,5 @@
 
-local copy = require(script.Parent:WaitForChild("copy"))
+local copy = require(script.Parent.copy)
 
 local function update(dictionary, key, updater)
 	local new = copy(dictionary)
