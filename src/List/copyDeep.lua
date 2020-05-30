@@ -12,3 +12,5 @@ local function copyDeep(list)
 	
 	return new
 end
+
+return copyDeep
