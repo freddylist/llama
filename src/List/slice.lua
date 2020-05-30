@@ -1,9 +1,13 @@
 
 local function slice(list, from, to)
-	local new = {}
+	assert(from <= to, "start index must be less than or equal to end index")
 
-	for i = from, to do
-		new[to - i] = list[i]
+	local new = {}
+	local index = 1
+
+	for i = math.max(1, from), math.min(to, #list) do
+		new[index] = list[i]
+		index = index + 1
 	end
 
 	return new
