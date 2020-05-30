@@ -5,6 +5,8 @@ local function find(list, predicate, from)
 			return i
 		end
 	end
+
+	return nil
 end
 
 return find
