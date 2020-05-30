@@ -1,5 +1,5 @@
 
-local equalObjects = require(script.Parent.Parent.EqualObjects)
+local equalObjects = require(script.Parent.Parent.equalObjects)
 
 local function equalsDeep(...)
 	if equalObjects(...) then
@@ -16,9 +16,11 @@ local function equalsDeep(...)
 				local compare = select(j, ...)
 				
 				for k, v in pairs(dictionary) do
-					if type(v) == "table" and type(compare[k]) == "table" and not equalsDeep(v, compare[k]) then
-						return false
-					elseif v ~= compare[k] then
+					if (type(v) == "table" 
+						and type(compare[k]) == "table" 
+						and not equalsDeep(v, compare[k])
+					) or v ~= compare[k]
+					then
 						return false
 					end
 				end
