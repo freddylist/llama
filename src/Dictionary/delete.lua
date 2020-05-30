@@ -1,5 +1,5 @@
 
-local function remove(dictionary, key)
+local function delete(dictionary, key)
 	local new = {}
 
 	for k, v in pairs(dictionary) do
@@ -11,4 +11,4 @@ local function remove(dictionary, key)
 	return new
 end
 
-return remove
+return delete

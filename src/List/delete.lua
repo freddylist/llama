@@ -1,5 +1,5 @@
 
-local function remove(list, index)
+local function delete(list, index)
 	local new = {}
 
 	local resultIndex = 1
@@ -14,4 +14,4 @@ local function remove(list, index)
 	return new
 end
 
-return remove
+return delete
