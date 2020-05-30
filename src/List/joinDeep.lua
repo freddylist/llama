@@ -5,21 +5,23 @@ local copyDeep = require(script.Parent.copyDeep)
 local function joinDeep(...)
 	local new = {}
 
+	local index = 1
+
 	for listIndex = 1, select("#", ...) do
 		local list = select(listIndex, ...)
 
 		for i = 1, #list do
-			if list[i] == None then
-				new[i] = nil
-			elseif type(list[i]) == "table" then
-				if new[i] == nil or type(new[i] ~= "table") then
-					new[i] = copyDeep(list[i])
+			if type(list[i]) == "table" then
+				if new[index] == nil or type(new[index] ~= "table") then
+					new[index] = copyDeep(list[i])
 				else
-					new[i] = joinDeep(new[i], list[i])
+					new[index] = joinDeep(new[index], list[i])
 				end
-			else
-				new[i] = list[i]
+			elseif list[i] ~= None then
+				new[index] = list[i]
 			end
+
+			index = index + 1
 		end
 	end
 
