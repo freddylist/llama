@@ -1,5 +1,5 @@
 
-local Dictionary = require(script.Parent.Parent.Dictionary)
+local Dictionary = require(script.Parent.Dictionary)
 
 local Set = {
 	add			= require(script.add),
