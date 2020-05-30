@@ -3,6 +3,7 @@ local List = {
 	copy			= require(script.copy),
 	copyDeep		= require(script.copyDeep),
 	count			= require(script.count),
+	delete			= require(script.delete),
 	equals			= require(script.equals),
 	equalsDeep		= require(script.equalsDeep),
 	every			= require(script.every),
@@ -22,7 +23,6 @@ local List = {
 	push			= require(script.push),
 	reduce			= require(script.reduce),
 	reduceRight		= require(script.reduceRight),
-	remove			= require(script.remove),
 	reverse			= require(script.reverse),
 	set				= require(script.set),
 	shift			= require(script.shift),
@@ -35,7 +35,6 @@ local List = {
 	update			= require(script.update),
 	zip				= require(script.zip),
 	zipAll			= require(script.zipAll),
-	zipWith			= require(script.zipWith),
 }
 
 return List
