@@ -1,0 +1,24 @@
+{
+	"name": "Llama",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"lib": {
+				"$className": "Folder",
+				"Llama": {
+					"$path": "src"
+				},
+				"TestEZ": {
+					"$path": "modules/testez"
+				}
+			},
+			"tests": {
+				"$className": "Folder",
+				"Llama": {
+					"$path": "tests"
+				}
+			}
+		}
+	}
+}
