@@ -1,4 +1,5 @@
 # Llama
+<img src="llama.png" />
 An extensive library for working with immutable data.
 
 ## Why the name Llama?
