@@ -10,14 +10,18 @@
 					"$path": "src"
 				},
 				"TestEZ": {
-					"$path": "modules/testez"
+					"$path": "modules/testez/src"
 				}
 			},
 			"tests": {
 				"$className": "Folder",
-				"Llama": {
-					"$path": "tests"
-				}
+				"$path": "tests"
+			}
+		},
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"RunTests": {
+				"$path": "bin/run-tests.server.lua"
 			}
 		}
 	}
