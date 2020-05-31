@@ -1,0 +1,28 @@
+{
+	"name": "Llama",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"lib": {
+				"$className": "Folder",
+				"Llama": {
+					"$path": "src"
+				},
+				"TestEZ": {
+					"$path": "modules/testez/src"
+				}
+			},
+			"tests": {
+				"$className": "Folder",
+				"$path": "tests"
+			}
+		},
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"RunTests": {
+				"$path": "bin/run-tests.server.lua"
+			}
+		}
+	}
+}
