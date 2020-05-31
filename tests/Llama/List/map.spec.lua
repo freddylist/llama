@@ -45,7 +45,7 @@ return function()
 		end
 	end)
 
-	it("should sets the new values to the result of the given callback", function()
+	it("should set the new values to the result of the given callback", function()
 		local a = {5, 6, 7}
 		local b = map(a, function(value)
 			return value * 2
