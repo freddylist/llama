@@ -1,11 +1,11 @@
 
-local function delete(dictionary, key)
-	local new = {}
+local copy = require(script.Parent.copy)
 
-	for k, v in pairs(dictionary) do
-		if k ~= key then
-			new[k] = v
-		end
+local function delete(dictionary, ...)
+	local new = copy(dictionary)
+
+	for i = 1, select('#', ...) do
+		new[select(i, ...)] = nil
 	end
 
 	return new

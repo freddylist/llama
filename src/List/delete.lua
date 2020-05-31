@@ -1,14 +1,11 @@
 
-local function delete(list, index)
-	local new = {}
+local copy = require(script.Parent.copy)
 
-	local resultIndex = 1
+local function delete(list, ...)
+	local new = copy(list)
 
-	for i = 1, #list do
-		if i ~= index then
-			new[resultIndex] = list[i]
-			resultIndex = resultIndex + 1
-		end
+	for i = 1, select('#', ...) do
+		new[select(i, ...)] = nil
 	end
 
 	return new
