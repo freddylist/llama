@@ -57,6 +57,15 @@ return function()
 		end
 	end)
 
+	it("should remove values when nil is returned", function()
+		local a = {5, 6, 7}
+		local b = map(a, function()
+			return nil
+		end)
+
+		expect(#b).to.equal(0)
+	end)
+
 	it("should work with an empty list", function()
 		local a = {}
 		local b = map(a, function() end)
