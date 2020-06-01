@@ -1,6 +1,22 @@
 
 local equalObjects = require(script.Parent.Parent.equalObjects)
 
+local function equalsDeepOneWay(object, comparison)
+	if type(object) == "table" and type(comparison) == "table" then
+		for k, v in pairs(object) do
+			if not equalsDeepOneWay(v, comparison[k]) then
+				return false
+			end
+		end
+	else
+		if object ~= comparison then
+			return false
+		end
+	end
+
+	return true
+end
+
 local function equalsDeep(...)
 	if equalObjects(...) then
 		return true
@@ -15,14 +31,8 @@ local function equalsDeep(...)
 			if j ~= i then
 				local compare = select(j, ...)
 				
-				for k, v in pairs(dictionary) do
-					if (type(v) == "table" 
-						and type(compare[k]) == "table" 
-						and not equalsDeep(v, compare[k])
-					) or v ~= compare[k]
-					then
-						return false
-					end
+				if not equalsDeepOneWay(dictionary, compare) then
+					return false
 				end
 			end
 		end
