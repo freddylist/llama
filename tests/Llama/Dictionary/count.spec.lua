@@ -68,6 +68,5 @@ return function()
 
 	it("should work with empty tables", function()
 		expect(count({})).to.equal(0)
-
 	end)
 end
