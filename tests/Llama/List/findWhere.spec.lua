@@ -50,6 +50,16 @@ return function()
 		expect(findWhere(list, isTwo)).to.equal(4)
 	end)
 
+	it("should return the index of the first value for which the predicate is true from start index if provided", function()
+		local list = { 1, 1, 1, 2, 2 }
+
+		local isTwo = function(value)
+			return value == 2
+		end
+
+		expect(findWhere(list, isTwo, 5)).to.equal(5)
+	end)
+
 	it("should allow access to table index in the predicate function", function()
 		local list = { 5, 4, 3, 2, 1 }
 
