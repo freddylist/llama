@@ -16,7 +16,7 @@ local function update(list, index, updater, callback)
 	assert(listType == "table", "expected a table for first argument, got " .. listType)
 
 	local indexType = type(index)
-	assert(indexType == "number" and indexType % 1 == 0, "expected an integer for third argument, got " .. indexType)
+	assert(indexType == "number" and index % 1 == 0, "expected an integer for second argument, got " .. indexType)
 
 	local new = copy(list)
 	local value
