@@ -15,6 +15,8 @@ local function zipAll(...)
 	end
 
 	for i = 1, maxLen do
+		new[i] = {}
+		
 		for j = 1, argc do
 			local value = select(j, ...)[i]
 
