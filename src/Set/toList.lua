@@ -5,6 +5,7 @@ local function toList(set)
 
 	for k, _ in pairs(set) do
 		new[index] = k
+		index = index + 1
 	end
 
 	return new
