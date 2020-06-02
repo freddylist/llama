@@ -4,7 +4,6 @@ local function unshift(list, ...)
 	assert(listType == "table", "expected a table for first argument, got " .. listType)
 
 	local argc = select('#', ...)
-	assert(argc > 0, "expected at least one non-nil value, got nothing")
 
 	local new = {}
 
@@ -15,6 +14,8 @@ local function unshift(list, ...)
 	for i = 1, #list do
 		new[argc + i] = list[i]
 	end
+
+	return new
 end
 
 return unshift
