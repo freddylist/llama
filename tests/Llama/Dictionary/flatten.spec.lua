@@ -89,4 +89,12 @@ return function()
 		expect(b.foo).to.equal(nil)
 		expect(b.baz).to.equal(nil)
 	end)
+
+	it("should work with an empty list", function()
+		local a = {}
+		local b = flatten(a)
+
+		expect(b).to.be.a("table")
+		expect(b).never.to.equal(a)
+	end)
 end
