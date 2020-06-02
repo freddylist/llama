@@ -15,12 +15,12 @@ return function()
 
 	it("should return whether table has value or not", function()
 		local a = {
-			foo = "foo",
-			bar = "bar",
-			baz = "baz"
+			foo = "oof",
+			bar = "rab",
+			baz = "zab"
 		}
 
-		expect(includes(a, "foo")).equal(true)
-		expect(includes(a, "yeet")).equal(false)
+		expect(includes(a, "oof")).to.equal(true)
+		expect(includes(a, "yeet")).to.equal(false)
 	end)
 end
