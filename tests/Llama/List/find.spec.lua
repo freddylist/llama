@@ -33,4 +33,10 @@ return function()
 
 		expect(find(list, 2)).to.equal(2)
 	end)
+
+	it("should return the index of the first value found from start index if provided", function()
+		local list = {1, 3, 3, 2, 3, 3, 2}
+
+		expect(find(list, 2, 5)).to.equal(7)
+	end)
 end
