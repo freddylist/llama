@@ -10,11 +10,15 @@ local function splice(list, start, finish, ...)
 	assert(finishType == "number" and finish % 1 == 0, "expected an integer for third argument, got " .. finishType)
 
 	assert(start <= finish, "start index must be less than or equal to end index")
-	
+
 	local new = {}
 	local index = 1
+	local len = #list
 
-	for i = 1, #list do
+	start = math.max(start, 1)
+	finish = math.min(start, len)
+
+	for i = 1, len do
 		if i == start then
 			for j = 1, select('#', ...) do
 				new[index] = select(j, ...)
