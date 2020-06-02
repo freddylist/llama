@@ -1,5 +1,11 @@
 
 local function reduce(list, reducer, initialReduction)
+	local listType = type(list)
+	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	
+	local reducerType = type(reducer)
+	assert(reducerType == "function", "expected a function for second argument, got " .. reducerType)
+
 	local reduction = initialReduction or list[1]
 	local start = initialReduction == nil and 2 or 1
 

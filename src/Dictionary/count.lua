@@ -4,6 +4,9 @@ local function alwaysTrue()
 end
 
 local function count(dictionary, predicate)
+	local dictionaryType = type(dictionary)
+	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
+	
 	local counter = 0
 
 	predicate = predicate or alwaysTrue

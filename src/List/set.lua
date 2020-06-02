@@ -1,5 +1,8 @@
 
 local function set(list, index, value)
+	local listType = type(list)
+	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	
 	local len = #list
 
 	assert(index <= len, "index must be less than or equal to the list length")

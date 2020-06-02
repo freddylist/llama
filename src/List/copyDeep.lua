@@ -1,5 +1,8 @@
 
 local function copyDeep(list)
+	local listType = type(list)
+	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	
 	local new = {}
 
 	for i = 1, #list do

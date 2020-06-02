@@ -1,5 +1,8 @@
 
 local function toSet(list)
+	local listType = type(list)
+	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	
 	local set = {}
 
 	for i = 1, #list do

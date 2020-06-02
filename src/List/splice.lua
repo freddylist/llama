@@ -1,9 +1,20 @@
 
 local function splice(list, start, finish, ...)
+	local listType = type(list)
+	assert(listType == "table", "expected a table for first argument, got " .. listType)
+
+	local startType = type(start)
+	assert(startType == "number" and start % 1 == 0, "expected an integer for second argument, got " .. startType)
+
+	local finishType = type(finish)
+	assert(finishType == "number" and finish % 1 == 0, "expected an integer for third argument, got " .. finishType)
+
+	assert(start <= finish, "start index must be less than or equal to end index")
+	
 	local new = {}
 	local index = 1
 
-	for i = 1, #new do
+	for i = 1, #list do
 		if i == start then
 			for j = 1, select('#', ...) do
 				new[index] = select(j, ...)
@@ -16,6 +27,8 @@ local function splice(list, start, finish, ...)
 			index = index + 1
 		end
 	end
+
+	return new
 end
 
 return splice
