@@ -5,32 +5,32 @@ return function()
 	local Llama = require(lib.Llama)
 
 	local Dictionary = Llama.Dictionary
-	local delete = Dictionary.delete
+	local removeKey = Dictionary.removeKey
 
 	it("should return a new table", function()
 		local a = {
 			llama = "cool",
 		}
 
-		local b = delete(a, "llama")
+		local b = removeKey(a, "llama")
 
 		expect(b).never.to.equal(a)
 		expect(b).to.be.a("table")
 	end)
 
-	it("should delete a single entry", function()
+	it("should remove a single entry", function()
 		local a = {
 			llama = "cool",
 			cryo = "coolor",
 			mutability = "coolest",
 		}
 
-		local b = delete(a, "mutability")
+		local b = removeKey(a, "mutability")
 
 		expect(b.mutability).to.equal(nil)
 	end)
 
-	it("should delete multiple entries", function()
+	it("should remove multiple entries", function()
 		local a = {
 			llama = "cool",
 			cryo = "coolor",
@@ -38,7 +38,7 @@ return function()
 			bad = "something",
 		}
 
-		local b = delete(a, "mutability", "bad")
+		local b = removeKey(a, "mutability", "bad")
 
 		expect(b.mutability).to.equal(nil)
 		expect(b.bad).to.equal(nil)
@@ -51,7 +51,7 @@ return function()
 		}
 
 		expect(function()
-			delete(a, "mutability")
+			removeKey(a, "mutability")
 		end).never.to.throw()
 	end)
 end

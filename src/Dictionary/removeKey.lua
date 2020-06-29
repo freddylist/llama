@@ -1,7 +1,7 @@
 
 local copy = require(script.Parent.copy)
 
-local function delete(dictionary, ...)
+local function removeKey(dictionary, ...)
 	local dictionaryType = type(dictionary)
 	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
 	
@@ -14,4 +14,4 @@ local function delete(dictionary, ...)
 	return new
 end
 
-return delete
+return removeKey
