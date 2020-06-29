@@ -7,7 +7,7 @@ return function()
 	local None = Llama.None
 
 	local List = Llama.List
-	local delete = List.delete
+	local removeIndex = List.removeIndex
 
 	it("should remove the element at the given index", function()
 		local a = {
@@ -16,7 +16,7 @@ return function()
 			"third"
 		}
 
-		local b = delete(a, 2)
+		local b = removeIndex(a, 2)
 
 		expect(#b).to.equal(2)
 		expect(b[1]).to.equal("first")
@@ -29,14 +29,14 @@ return function()
 			"second",
 			"third"
 		}
-		local b = delete(a, 4)
+		local b = removeIndex(a, 4)
 
 		expect(#b).to.equal(#a)
 		for i = 1, #a do
 			expect(b[i]).to.equal(a[i])
 		end
 
-		local c = delete(a, -2)
+		local c = removeIndex(a, -2)
 
 		expect(#c).to.equal(#a)
 		for i = 1, #a do
@@ -51,7 +51,7 @@ return function()
 			"third"
 		}
 
-		local b = delete(a, 1)
+		local b = removeIndex(a, 1)
 
 		expect(#b).to.equal(2)
 		expect(b[1]).to.equal(None)

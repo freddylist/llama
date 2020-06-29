@@ -1,7 +1,7 @@
 
 local toSet = require(script.Parent.toSet)
 
-local function delete(list, ...)
+local function removeIndex(list, ...)
 	local listType = type(list)
 	assert(listType == "table", "expected a table for first argument, got " .. listType)
 	
@@ -19,4 +19,4 @@ local function delete(list, ...)
 	return new
 end
 
-return delete
+return removeIndex
