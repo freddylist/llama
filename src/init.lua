@@ -4,8 +4,8 @@ local Llama = {
 	List = require(script.List),
 	Set = require(script.Set),
 
-	isEmpty = require(script.isEmpty),
 	equalObjects = require(script.equalObjects),
+	isEmpty = require(script.isEmpty),
 
 	None = require(script.None),
 }
