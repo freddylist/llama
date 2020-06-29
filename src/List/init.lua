@@ -24,6 +24,7 @@ local List = {
 	reduce = require(script.reduce),
 	reduceRight = require(script.reduceRight),
 	removeIndex = require(script.removeIndex),
+	removeValue = require(script.removeValue),
 	reverse = require(script.reverse),
 	set = require(script.set),
 	shift = require(script.shift),
