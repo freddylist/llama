@@ -4,7 +4,7 @@ local function insert(list, index, ...)
 	assert(listType == "table", "expected a table for first argument, got " .. listType)
 
 	local len = #list
-	assert(index >= 1 and index <= len, "index must be in bounds of list")
+	assert(index >= 1 and index <= len + 1, "index must be in bounds of list")
 
 	local new = {}
 	local resultIndex = 1

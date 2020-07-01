@@ -41,11 +41,11 @@ return function()
 		expect(next(result[2])).to.equal(nil)
 	end)
 
-	it("should throw if the given index is higher than the list length", function()
+	it("should throw if the given index is higher than the list length + 1", function()
 		local list = {1}
 
 		expect(function()
-			insert(list, #list + 1, {})
+			insert(list, #list + 2, {})
 		end).to.throw()
 	end)
 
