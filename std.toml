@@ -19,8 +19,24 @@ type = "string"
 [[itFOCUS.args]]
 type = "function"
 
-[HACK_NO_XPCALL]
-args = []
+[[itSKIP.args]]
+type = "string"
+
+[[itSKIP.args]]
+type = "function"
+required = false
+
+[[afterEach.args]]
+type = "function"
+
+[[beforeEach.args]]
+type = "function"
+
+[[afterAll.args]]
+type = "function"
+
+[[beforeAll.args]]
+type = "function"
 
 [__LEMUR__]
 property = true

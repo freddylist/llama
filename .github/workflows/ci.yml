@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Checkout submodules
+      shell: bash
+      run: |
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - uses: rojo-rbx/setup-foreman@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: selene lint
+      run: selene src tests
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: true
+    - uses: leafo/gh-actions-lua@v8
+      with:
+        luaVersion: "5.1"
+    - uses: leafo/gh-actions-luarocks@v4
+    - name: Install dependencies
+      run: |
+        luarocks install luafilesystem
+    - name: Test
+      run: |
+        lua bin/run-lemur.lua

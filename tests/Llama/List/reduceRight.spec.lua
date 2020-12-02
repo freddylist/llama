@@ -64,4 +64,12 @@ return function()
 			return accum
 		end, 0)
 	end)
+
+	it("should accept a falsy initial reduction", function()
+		local a = {1, 2}
+		local result = reduceRight(a, function(acc)
+			return acc
+		end, false)
+		expect(result).to.equal(false)
+	end)
 end
