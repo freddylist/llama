@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: true
+
+    - uses: leafo/gh-actions-lua@v8
+      with:
+        luaVersion: "5.1"
+
+    - uses: leafo/gh-actions-luarocks@v4
+
+    - name: Install dependencies
+      run: |
+        luarocks install luafilesystem
+
+    - name: Test
+      run: |
+        lua bin/run-lemur.lua
