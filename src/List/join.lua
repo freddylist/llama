@@ -9,10 +9,12 @@ local function join(...)
 	for listIndex = 1, select("#", ...) do
 		local list = select(listIndex, ...)
 
-		for i = 1, #list do
-			if list[i] ~= None then
-				new[index] = list[i]
-				index = index + 1
+		if list then
+			for i = 1, #list do
+				if list[i] ~= None then
+					new[index] = list[i]
+					index = index + 1
+				end
 			end
 		end
 	end

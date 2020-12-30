@@ -7,11 +7,13 @@ local function join(...)
 	for dictionaryIndex = 1, select("#", ...) do
 		local dictionary = select(dictionaryIndex, ...)
 
-		for k, v in pairs(dictionary) do
-			if v == None then
-				new[k] = nil
-			else
-				new[k] = v
+		if dictionary then
+			for k, v in pairs(dictionary) do
+				if v == None then
+					new[k] = nil
+				else
+					new[k] = v
+				end
 			end
 		end
 	end

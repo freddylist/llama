@@ -98,4 +98,24 @@ return function()
 	it("should accept zero tables", function()
 		expect(join()).to.be.a("table")
 	end)
+
+	it("should accept holes in arguments", function()
+		local a = {
+			foo = "foo-a",
+		}
+
+		local b = {
+			bar = "bar-b",
+		}
+
+		local c = join(a, nil, b)
+
+		expect(c.foo).to.equal(a.foo)
+		expect(c.bar).to.equal(b.bar)
+
+		local d = join(nil, a, b)
+
+		expect(d.foo).to.equal(a.foo)
+		expect(d.bar).to.equal(b.bar)
+	end)
 end
