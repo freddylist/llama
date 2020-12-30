@@ -51,7 +51,7 @@ return function()
 
 	it("should accept holes in arguments", function()
 		local a = {1}
-		local b = {1}
+		local b = {2}
 
 		local c = join(a, nil, b)
 
