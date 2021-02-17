@@ -4,3 +4,6 @@
 [submodule "modules/lemur"]
 	path = modules/lemur
 	url = https://github.com/LPGhatguy/lemur.git
+[submodule "modules/t"]
+	path = modules/t
+	url = https://github.com/osyrisrblx/t.git

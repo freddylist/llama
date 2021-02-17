@@ -1,6 +1,9 @@
 {
 	"name": "Llama",
 	"tree": {
-		"$path": "src"
+		"$path": "src",
+		"t": {
+			"$path": "modules/t/lib"
+		}
 	}
 }

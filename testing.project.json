@@ -7,7 +7,10 @@
 			"lib": {
 				"$className": "Folder",
 				"Llama": {
-					"$path": "src"
+					"$path": "src",
+					"t": {
+						"$path": "modules/t/lib"
+					}
 				},
 				"TestEZ": {
 					"$path": "modules/testez/src"
