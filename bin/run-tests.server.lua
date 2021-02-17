@@ -1,7 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local lib = ReplicatedStorage.lib
-local TestEZ = require(lib.TestEZ)
+local Packages = ReplicatedStorage.Packages
+local TestEZ = require(Packages.TestEZ)
 
 local tests = ReplicatedStorage.tests
 

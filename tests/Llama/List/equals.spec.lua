@@ -1,8 +1,8 @@
 return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-	local lib = ReplicatedStorage.lib
-	local Llama = require(lib.Llama)
+	local Packages = ReplicatedStorage.Packages
+	local Llama = require(Packages.Llama)
 
 	local List = Llama.List
 	local equals = List.equals

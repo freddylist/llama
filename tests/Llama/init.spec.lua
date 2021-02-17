@@ -1,9 +1,9 @@
 return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-	local lib = ReplicatedStorage.lib
+	local Packages = ReplicatedStorage.Packages
 
 	it("should load", function()
-		require(lib.Llama)
+		require(Packages.Llama)
 	end)
 end

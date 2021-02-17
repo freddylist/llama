@@ -6,13 +6,13 @@ local lemur = require("modules.lemur")
 local habitat = lemur.Habitat.new()
 local root = habitat.game:GetService("ReplicatedStorage")
 
-local lib = lemur.Instance.new('Folder')
-lib.Name = 'lib'
-lib.Parent = root
+local Packages = lemur.Instance.new("Folder")
+Packages.Name = "Packages"
+Packages.Parent = root
 
 local Llama = habitat:loadFromFs("src")
 Llama.Name = "Llama"
-Llama.Parent = lib
+Llama.Parent = Packages
 
 local tests = habitat:loadFromFs("tests")
 tests.Name = "tests"
@@ -20,7 +20,7 @@ tests.Parent = root
 
 local TestEZ = habitat:loadFromFs("modules/testez/src")
 TestEZ.Name = "TestEZ"
-TestEZ.Parent = lib
+TestEZ.Parent = Packages
 
 local runTests = habitat:loadFromFs("bin/run-tests.server.lua")
 
