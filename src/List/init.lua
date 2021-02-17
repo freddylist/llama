@@ -14,7 +14,6 @@ local List = {
 	findWhereLast = require(script.findWhereLast),
 	flatMap = require(script.flatMap),
 	flatten = require(script.flatten),
-	get = require(script.get),
 	includes = require(script.includes),
 	insert = require(script.insert),
 	join = require(script.join),

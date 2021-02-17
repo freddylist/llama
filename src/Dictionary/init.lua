@@ -10,7 +10,6 @@ local Dictionary = {
 	flatMap = require(script.flatMap),
 	flatten = require(script.flatten),
 	flip = require(script.flip),
-	get = require(script.get),
 	has = require(script.has),
 	includes = require(script.includes),
 	join = require(script.join),
