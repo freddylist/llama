@@ -1,5 +1,7 @@
 local List = {
 	append = require(script.append),
+	concatenate = require(script.concatenate),
+	concatenateDeep = require(script.concatenateDeep),
 	copy = require(script.copy),
 	copyDeep = require(script.copyDeep),
 	count = require(script.count),

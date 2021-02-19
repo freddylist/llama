@@ -30,6 +30,33 @@ return function()
 		expect(join(a)).never.to.equal(a)
 	end)
 
+	it("should not mutate passed in tables", function()
+		local mutationsA = 0
+		local mutationsB = 0
+
+		local a = {}
+		local b = {
+			foo = "foo-b",
+		}
+
+		setmetatable(a, {
+			__newindex = function()
+				mutationsA = mutationsA + 1
+			end,
+		})
+
+		setmetatable(b, {
+			__newindex = function()
+				mutationsB = mutationsB + 1
+			end,
+		})
+
+		join(a, b)
+
+		expect(mutationsA).to.equal(0)
+		expect(mutationsB).to.equal(0)
+	end)
+
 	it("should merge tables, overwriting previous values", function()
 		local a = {
 			foo = "foo-a",
@@ -60,33 +87,6 @@ return function()
 		local c = join(a, b)
 
 		expect(c.foo).never.to.be.ok()
-	end)
-
-	it("should not mutate passed in tables", function()
-		local mutationsA = 0
-		local mutationsB = 0
-
-		local a = {}
-		local b = {
-			foo = "foo-b",
-		}
-
-		setmetatable(a, {
-			__newindex = function()
-				mutationsA = mutationsA + 1
-			end,
-		})
-
-		setmetatable(b, {
-			__newindex = function()
-				mutationsB = mutationsB + 1
-			end,
-		})
-
-		join(a, b)
-
-		expect(mutationsA).to.equal(0)
-		expect(mutationsB).to.equal(0)
 	end)
 
 	it("should accept arbitrary numbers of tables", function()
