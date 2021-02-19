@@ -5,11 +5,11 @@ return function()
 	local Llama = require(Packages.Llama)
 
 	local Set = Llama.Set
-	local intersect = Set.intersect
+	local intersection = Set.intersection
 
 	it("should validate types", function()
 		local _, err = pcall(function()
-			intersect(0)
+			intersection(0)
 		end)
 
 		expect(string.find(err, "expected, got")).to.be.ok()
@@ -18,7 +18,7 @@ return function()
 	it("should return a new table", function()
 		local a = {}
 
-		expect(intersect(a)).never.to.equal(a)
+		expect(intersection(a)).never.to.equal(a)
 	end)
 	
 	it("should not mutate passed in tables(s)", function()
@@ -47,7 +47,7 @@ return function()
 			end
 		})
 
-		intersect(a, b)
+		intersection(a, b)
 
 		expect(mutationsA).to.equal(0)
 		expect(mutationsB).to.equal(0)
@@ -70,9 +70,9 @@ return function()
 			foobaz = true,
 		}
 
-		local intersection = intersect(a, b, c)
+		local d = intersection(a, b, c)
 		
-		for k, _ in pairs(intersection) do
+		for k, _ in pairs(d) do
 			expect(k).to.equal("foo")
 		end
 	end)

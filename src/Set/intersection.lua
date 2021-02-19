@@ -5,7 +5,7 @@ local t = require(Llama.t)
 
 local validate = t.table
 
-local function intersect(...)
+local function intersection(...)
 	local new = {}
 	local argCount = select('#', ...)
 	local firstSet = select(1, ...)
@@ -34,4 +34,4 @@ local function intersect(...)
 	return new
 end
 
-return intersect
+return intersection
