@@ -1,25 +1,18 @@
 local List = script.Parent
-local toSet = require(List.toSet)
 
 local Llama = List.Parent
 local t = require(Llama.t)
 
-local validateList = t.table
-local validateIndex = t.intersection(t.integer, t.numberMin(1))
+local validate = t.tuple(t.table, t.intersection(t.integer, t.numberMin(1)))
 
-local function removeIndex(list, ...)
-	assert(validateList(list))
-
-	for i = 1, select('#', ...) do
-		assert(validateIndex(select(i, ...)))
-	end
+local function removeIndex(list, indexToRemove)
+	assert(validate(list, indexToRemove))
 	
 	local new = {}
-	local removeIndices = toSet({...})
 	local index = 1
 
 	for i = 1, #list do
-		if not removeIndices[i] then
+		if i ~= indexToRemove then
 			new[index] = list[i]
 			index = index + 1
 		end

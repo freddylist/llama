@@ -5,11 +5,11 @@ return function()
 	local Llama = require(Packages.Llama)
 
 	local List = Llama.List
-	local removeValue = List.removeValue
+	local removeValues = List.removeValues
 
 	it("should validate types", function()
 		local _, err = pcall(function()
-			removeValue(0)
+			removeValues(0)
 		end)
 
 		expect(string.find(err, "expected, got")).to.be.ok()
@@ -18,7 +18,7 @@ return function()
 	it("should return a new table", function()
 		local a = {}
 
-		local b = removeValue(a, "foo")
+		local b = removeValues(a, "foo")
 
 		expect(b).never.to.equal(a)
 		expect(b).to.be.a("table")
@@ -34,20 +34,20 @@ return function()
 			end,
 		})
 
-		removeValue(a, "bar")
+		removeValues(a, "bar")
 
 		expect(mutations).to.equal(0)
 	end)
 
-	it("should remove a single value", function()
+	it("should remove multiple values", function()
 		local a = {
 			"foo",
 			"bar",
 			"baz",
-			"baz",
+			"qux",
 		}
 
-		local b = removeValue(a, "baz")
+		local b = removeValues(a, "baz", "qux")
 
 		expect(#b).to.equal(2)
 		expect(b[1]).to.equal("foo")
@@ -61,7 +61,7 @@ return function()
 		}
 
 		expect(function()
-			removeValue(a, "baz")
+			removeValues(a, "baz")
 		end).never.to.throw()
 	end)
 end
