@@ -1,11 +1,13 @@
+local Dictionary = script.Parent
+local copy = require(Dictionary.copy)
 
-local copy = require(script.Parent.copy)
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.any)
 
 local function set(dictionary, key, value)
-	local dictionaryType = type(dictionary)
-	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
-
-	assert(key ~= nil, "expected second argument to be anything but nil, got nil")
+	assert(validate(dictionary, key))
 
 	local new = copy(dictionary)
 

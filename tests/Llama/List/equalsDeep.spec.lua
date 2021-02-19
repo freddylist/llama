@@ -9,34 +9,32 @@ return function()
 
 	it("should return a boolean", function()
 		local a = {}
-		local b = {}
 
-		expect(equalsDeep(a, b)).to.be.a("boolean")
+		expect(equalsDeep(a, a)).to.be.a("boolean")
+		expect(equalsDeep(a, {})).to.be.a("boolean")
+		expect(equalsDeep({}, { 1 })).to.be.a("boolean")
 	end)
 
 	it("should return whether provided tables and subtables have value equality or not", function()
 		local a = {
 			"foo",
 			"bar",
-			"baz",
 			{
-				bob = "avocado",
+				"baz",
 			},
 		}
 		local b = {
 			"foo",
 			"bar",
-			"baz",
 			{
-				bob = "avocado",
+				"baz",
 			},
 		}
 		local c = {
 			"foo",
-			"bar",
-			"zab",
+			"baz",
 			{
-				bob = "avocado",
+				"baz",
 			},
 		}
 
@@ -48,14 +46,14 @@ return function()
 		local a = {
 			{
 				{
-					"hello"
+					"hi"
 				}
 			}
 		}
 		local b = {
 			{
 				{
-					"hello"
+					"hi"
 				}
 			}
 		}
@@ -67,28 +65,25 @@ return function()
 		local a = {
 			"foo",
 			"bar",
-			"baz",
 			{
-				"yeet",
+				"baz",
 			},
 		}
 		local b = a
 		local c = {
 			"foo",
 			"bar",
-			"baz",
 			{
-				"yeet",
+				"baz",
 			},
 		}
 		local d = {
 			"foo",
 			"bar",
-			"zab",
 			{
 				{
 					{
-						"yes",
+						"baz",
 					},
 				},
 			},
@@ -97,11 +92,10 @@ return function()
 		local f = {
 			"foo",
 			"bar",
-			"zab",
 			{
 				{
 					{
-						"yes",
+						"baz",
 					},
 				},
 			},
@@ -120,5 +114,10 @@ return function()
 
 	it("should work with zero tables", function()
 		expect(equalsDeep()).to.equal(true)
+	end)
+
+	it("should work for any type of objects", function()
+		expect(equalsDeep(1, 1)).to.equal(true)
+		expect(equalsDeep(1, "a")).to.equal(false)
 	end)
 end

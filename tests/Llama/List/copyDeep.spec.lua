@@ -9,6 +9,14 @@ return function()
 	local List = Llama.List
 	local copyDeep = List.copyDeep
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			copyDeep(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
@@ -27,22 +35,18 @@ return function()
 	end)
 
 	it("should not mutate passed in tables", function()
-		local mutationsA = 0
-
-		local a = {
-			"foo",
-			"bar",
-		}
+		local a = { "foo", "bar" }
+		local mutations = 0
 
 		setmetatable(a, {
 			__newindex = function()
-				mutationsA = mutationsA + 1
+				mutations = mutations + 1
 			end,
 		})
 
 		copyDeep(a)
 
-		expect(mutationsA).to.equal(0)
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should accept one (or more) tables", function()
@@ -56,9 +60,9 @@ return function()
 
 	it("should copy the table", function()
 		local a = {
-			"yea",
-			"jimmy",
-			"yes",
+			"foo",
+			"bar",
+			"baz",
 		}
 
 		local b = copyDeep(a)
@@ -74,10 +78,10 @@ return function()
 
 	it("should copy subtables", function()
 		local a = {
-			"yea",
-			"jimmy",
+			"foo",
+			"bar",
 			{
-				"no"
+				"baz",
 			},
 		}
 

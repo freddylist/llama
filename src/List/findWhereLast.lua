@@ -1,12 +1,20 @@
+local List = script.Parent
 
-local function find(list, predicate, from)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback, t.optional(t.intersection(t.integer, t.numberMin(1))))
+
+local function findWhereLast(list, predicate, from)
+	assert(validate(list, predicate, from))
+
+	local len = #list
+
+	from = from or len
+
+	assert(len == 0 or from <= len, "index out of bounds")
 	
-	local predicateType = type(predicate)
-	assert(predicateType == "function", "expected a function for second argument, got " .. predicateType)
-	
-	for i = from or #list, 1, -1 do
+	for i = from, 1, -1 do
 		if predicate(list[i], i) then
 			return i
 		end
@@ -15,4 +23,4 @@ local function find(list, predicate, from)
 	return nil
 end
 
-return find
+return findWhereLast

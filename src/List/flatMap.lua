@@ -1,10 +1,12 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback)
 
 local function flatMap(list, mapper)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
-	
-	local mapperType = type(mapper)
-	assert(mapperType == "function", "expected a function for second argument, got " .. mapperType)
+	assert(validate(list, mapper))
 
 	local new = {}
 	local index = 1

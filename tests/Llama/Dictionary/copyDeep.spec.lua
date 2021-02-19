@@ -9,15 +9,42 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local copyDeep = Dictionary.copyDeep
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			copyDeep(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
 		expect(copyDeep(a)).never.to.equal(a)
 	end)
 
+	it("should not mutate passed in tables", function()
+		local mutations = 0
+
+		local a = {
+			foo = 1,
+			bar = 2,
+		}
+
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
+
+		copyDeep(a)
+
+		expect(mutations).to.equal(0)
+	end)
+
 	it("should not remove values set to None", function()
 		local a = {
-			foo = "foo",
+			foo = 1,
 			bar = None,
 		}
 
@@ -26,26 +53,7 @@ return function()
 		expect(b.bar).to.equal(None)
 	end)
 
-	it("should not mutate passed in tables", function()
-		local mutationsA = 0
-
-		local a = {
-			foo = "foo",
-			bar = "bar",
-		}
-
-		setmetatable(a, {
-			__newindex = function()
-				mutationsA = mutationsA + 1
-			end,
-		})
-
-		copyDeep(a)
-
-		expect(mutationsA).to.equal(0)
-	end)
-
-	it("should accept one (or more) tables", function()
+	it("should accept 1 (or more) table(s)", function()
 		expect(function()
 			copyDeep({})
 		end).never.to.throw()
@@ -56,9 +64,9 @@ return function()
 
 	it("should copy the table", function()
 		local a = {
-			heck = "yea",
-			timmy = "jimmy",
-			bob = "yes",
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
 
 		local b = copyDeep(a)
@@ -74,23 +82,24 @@ return function()
 
 	it("should copy subtables", function()
 		local a = {
-			heck = "yea",
-			timmy = "jimmy",
-			bob = {
-				tail = "no"
+			foo = 1,
+			bar = 2,
+			foobar = {
+				baz = 3,
+				qux = 4,
 			},
 		}
 
 		local b = copyDeep(a)
 
-		expect(a.bob).never.to.equal(b.bob)
+		expect(a.foobar).never.to.equal(b.foobar)
 		
-		for k, v in pairs(a.bob) do
-			expect(v).to.equal(b.bob[k])
+		for k, v in pairs(a.foobar) do
+			expect(v).to.equal(b.foobar[k])
 		end
 
-		for k, v in pairs(b.bob) do
-			expect(v).to.equal(a.bob[k])
+		for k, v in pairs(b.foobar) do
+			expect(v).to.equal(a.foobar[k])
 		end
 	end)
 end

@@ -7,6 +7,22 @@ return function()
 	local List = Llama.List
 	local flatMap = List.flatMap
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+			{ 0, function() end },
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				flatMap(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
@@ -15,22 +31,19 @@ return function()
 		end)).never.to.equal(a)
 	end)
 
-	it("should not mutate the given table", function()
-		local a = {
-			"foo",
-			{
-				"bar",
-				"baz"
-			}
-		}
+	it("should not mutate passed in tables", function()
+		local a = { "foo", "bar" }
+		local mutations = 0
 
-		flatMap(a, function(v)
-			return v
-		end)
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
 
-		expect(a[2][1]).to.equal("bar")
-		expect(a[2][2]).to.equal("baz")
-		expect(a[3]).to.equal(nil)
+		flatMap(a, function() end)
+
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should call the callback for each element", function()
@@ -78,22 +91,22 @@ return function()
 	end)
 
 	it("should map and flatten the given table", function()
-		local bumpy = {
+		local a = {
 			{
-				"hi",
-				"hello",
+				"foo",
+				"bar",
 			}, {
-				"oof",
 				"baz",
+				"qux",
 			}
 		}
 
-		local b = flatMap(bumpy, function()
-			return "no"
+		local b = flatMap(a, function()
+			return "oof"
 		end)
 
 		for k, v in pairs(b) do
-			expect(v).to.equal("no")
+			expect(v).to.equal("oof")
 			expect(k).to.be.a("number")
 		end
 	end)
@@ -102,21 +115,21 @@ return function()
 		local a = {
 			"foo",
 			{
+				"bar",
 				"baz",
-				"foobar",
 			}, {
 				"bar",
-				"zab",
+				"baz",
 			},
-			"zub",
+			"qux",
 		}
 		local flattened = {
 			"foo",
-			"baz",
-			"foobar",
 			"bar",
-			"zab",
-			"zub",
+			"baz",
+			"bar",
+			"baz",
+			"qux",
 		}
 
 		local b = flatMap(a, function(v)
@@ -157,7 +170,7 @@ return function()
 		end
 	end)
 
-	it("should work with an empty list", function()
+	it("should work with an empty a", function()
 		local a = {}
 		local b = flatMap(a, function() end)
 

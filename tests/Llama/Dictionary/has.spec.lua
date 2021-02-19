@@ -7,10 +7,25 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local has = Dictionary.has
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ 0, 0 },
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				has(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a boolean", function()
 		local a = {}
 
-		expect(has(a, "e")).to.be.a("boolean")
+		expect(has(a, 1)).to.be.a("boolean")
 	end)
 
 	it("should return whether table has key or not", function()
@@ -21,6 +36,6 @@ return function()
 		}
 
 		expect(has(a, "foo")).equal(true)
-		expect(has(a, "yeet")).equal(false)
+		expect(has(a, "oof")).equal(false)
 	end)
 end

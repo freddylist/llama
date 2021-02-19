@@ -7,13 +7,21 @@ return function()
 	local Set = Llama.Set
 	local add = Set.add
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			add(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
 		expect(add(a, "e")).never.to.equal(a)
 	end)
 	
-	it("should not mutate the given table", function()
+	it("should not mutate passed in tables", function()
 		local a = {
 			foo = true,
 			bar = true,

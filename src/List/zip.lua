@@ -1,11 +1,30 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function zip(...)
 	local new = {}
-	local argc = select('#', ...)
-	local minLen = #select(1, ...)
+	local argCount = select('#', ...)
 
-	for i = 2, argc do
-		local len = #select(i, ...)
+	if argCount <= 0 then
+		return new
+	end
+
+	local firstList = select(1, ...)
+
+	assert(validate(firstList))
+
+	local minLen = #firstList
+
+	for i = 2, argCount do
+		local list = select(i, ...)
+
+		assert(validate(list))
+
+		local len = #list
 
 		if len < minLen then
 			minLen = len
@@ -15,7 +34,7 @@ local function zip(...)
 	for i = 1, minLen do
 		new[i] = {}
 		
-		for j = 1, argc do
+		for j = 1, argCount do
 			new[i][j] = select(j, ...)[i]
 		end
 	end

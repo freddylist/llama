@@ -1,4 +1,3 @@
-
 local List = {
 	append = require(script.append),
 	copy = require(script.copy),

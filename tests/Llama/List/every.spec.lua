@@ -7,10 +7,26 @@ return function()
 	local List = Llama.List
 	local every = List.every
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+			{ 0, function() end },
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				every(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a boolean", function()
-		local function always(bool)
+		local function always(value)
 			return function()
-				return bool
+				return value
 			end
 		end
 
@@ -33,30 +49,29 @@ return function()
 
 	it("should return true if every entry passes the predicate", function()
 		local a = {
-			"a",
-			"a",
-			"a",
+			"foo",
+			"foo",
+			"foo",
 		}
 
-		local function aOnly(v)
-			return v == "a"
+		local function onlyFoo(v)
+			return v == "foo"
 		end
 
-		expect(every(a, aOnly)).to.equal(true)
+		expect(every(a, onlyFoo)).to.equal(true)
 	end)
 
 	it("should return false if not all entries pass the predicate", function()
 		local a = {
-			"a",
-			"a",
-			"a",
-			"b"
+			"foo",
+			"foo",
+			"bar",
 		}
 
-		local function aOnly(v)
-			return v == "a"
+		local function onlyFoo(v)
+			return v == "foo"
 		end
 
-		expect(every(a, aOnly)).to.equal(false)
+		expect(every(a, onlyFoo)).to.equal(false)
 	end)
 end

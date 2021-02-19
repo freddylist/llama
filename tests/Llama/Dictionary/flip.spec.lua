@@ -7,6 +7,14 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local flip = Dictionary.flip
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			flip(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 		local b = flip(a)
@@ -14,11 +22,11 @@ return function()
 		expect(a).never.to.equal(b)
 	end)
 
-	it("should not mutate the given table", function()
+	it("should not mutate passed in tables", function()
 		local a = {
-			foo = "foo",
-			bar = "bar",
-			baz = "baz"
+			foo = "oof",
+			bar = "rab",
+			baz = "zab",
 		}
 		local mutations = 0
 
@@ -35,10 +43,9 @@ return function()
 
 	it("should flip keys and values", function()
 		local a = {
-			foo = 1,
-			bar = "yeehaw",
-			baz = "yeet",
-			skeet = "yeet",
+			foo = "oof",
+			bar = "rab",
+			baz = "zab",
 		}
 
 		local b = flip(a)
@@ -46,5 +53,9 @@ return function()
 		for k, v in pairs(b) do
 			expect(k).to.equal(a[v])
 		end
+	end)
+
+	it("should work with empty tables", function()
+		expect(flip({})).to.be.a("table")
 	end)
 end

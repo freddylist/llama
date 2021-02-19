@@ -1,10 +1,12 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback)
 
 local function some(list, predicate)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
-	
-	local predicateType = type(predicate)
-	assert(predicateType == "function", "expected a function for second argument, got " .. predicateType)
+	assert(validate(list, predicate))
 	
 	for i = 1, #list do
 		if predicate(list[i], i) then

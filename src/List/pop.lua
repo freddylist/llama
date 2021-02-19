@@ -1,11 +1,18 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.optional(t.intersection(t.integer, t.numberPositive)))
 
 local function pop(list, pops)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validate(list, pops))
+
+	local len = #list
 
 	pops = pops or 1
-	local popsType = type(pops)
-	assert(popsType == "number" and pops % 1 == 0, "expected an integer for second argument, got " .. popsType)
+
+	assert(pops <= len, "index out of bounds")
 
 	local new = {}
 

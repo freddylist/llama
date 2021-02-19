@@ -10,13 +10,18 @@ return function()
 	local joinDeep = Dictionary.joinDeep
 
 	it("should validate types", function()
-		expect(function()
-			joinDeep(0)
-		end).to.throw()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+		}
 
-		expect(function()
-			joinDeep({}, 0)
-		end).to.throw()
+		for i = 1, #args do
+			local _, err = pcall(function()
+				joinDeep(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
 	end)
 
 	it("should return a new table", function()
@@ -54,7 +59,7 @@ return function()
 
 		local c = joinDeep(a, b)
 
-		expect(c.foo).to.equal(nil)
+		expect(c.foo).never.to.be.ok()
 	end)
 
 	it("should not mutate passed in tables", function()

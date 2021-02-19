@@ -1,7 +1,12 @@
+local Dictionary = script.Parent
+
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function includes(dictionary, value)
-	local dictionaryType = type(dictionary)
-	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
+	assert(validate(dictionary))
 	
 	for _, v in pairs(dictionary) do
 		if v == value then

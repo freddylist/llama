@@ -1,19 +1,26 @@
+local Dictionary = script.Parent
+local copyDeep = require(Dictionary.copyDeep)
 
+local Llama = Dictionary.Parent
 local None = require(script.Parent.Parent.None)
-local copyDeep = require(script.Parent.copyDeep)
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function joinDeep(...)
 	local new = {}
 
-	for dictionaryIndex = 1, select("#", ...) do
+	for dictionaryIndex = 1, select('#', ...) do
 		local dictionary = select(dictionaryIndex, ...)
 
-		if dictionary then
+		if dictionary ~= nil then
+			assert(validate(dictionary))
+
 			for k, v in pairs(dictionary) do
 				if v == None then
 					new[k] = nil
 				elseif type(v) == "table" then
-					if new[k] == nil or type(new[k] ~= "table") then
+					if new[k] == nil or type(new[k]) ~= "table" then
 						new[k] = copyDeep(v)
 					else
 						new[k] = joinDeep(new[k], v)

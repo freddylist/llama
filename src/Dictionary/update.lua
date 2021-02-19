@@ -1,8 +1,11 @@
+local Dictionary = script.Parent
+local copy = require(Dictionary.copy)
 
-local copy = require(script.Parent.copy)
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
 
-local function noUpdate(v, k)
-	return v, k
+local function noUpdate(v)
+	return v
 end
 
 local function call(callback, ...)
@@ -11,25 +14,21 @@ local function call(callback, ...)
 	end
 end
 
+local optionalCallbackType = t.optional(t.callback)
+local validate = t.tuple(t.table, t.any, optionalCallbackType, optionalCallbackType)
+
 local function update(dictionary, key, updater, callback)
-	local dictionaryType = type(dictionary)
-	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
-
-	assert(key ~= nil, "expected second argument to be anything but nil, got nil")
-
-	local new = copy(dictionary)
-	local v, k
+	assert(validate(dictionary, key, updater, callback))
 
 	updater = updater or noUpdate
 
+	local new = copy(dictionary)
+
 	if new[key] ~= nil then
-		v, k = updater(new[key], key)
-		call(callback, true, v, k or key)
+		new[key] = updater(new[key], key)
 	else
-		v, k = call(callback, false, key)
+		new[key] = call(callback, key)
 	end
-	
-	new[k or key] = v
 
 	return new
 end

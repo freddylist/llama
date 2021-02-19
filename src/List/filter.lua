@@ -1,10 +1,12 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback)
 
 local function filter(list, filterer)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
-
-	local filtererType = type(filterer)
-	assert(filtererType == "function", "expected a function for second argument, got " .. filtererType)
+	assert(validate(list, filterer))
 	
 	local new = {}
 	local index = 1

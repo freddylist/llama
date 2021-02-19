@@ -1,17 +1,21 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback)
 
 local function reduceRight(list, reducer, initialReduction)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
-
-	local reducerType = type(reducer)
-	assert(reducerType == "function", "expected a function for second argument, got " .. reducerType)
+	assert(validate(list, reducer))
 
 	local len = #list
 	local reduction = initialReduction
+	local start = len
+
 	if reduction == nil then
 		reduction = list[len]
+		start = len - 1
 	end
-	local start = initialReduction == nil and len - 1 or len
 
 	for i = start, 1, -1 do
 		reduction = reducer(reduction, list[i], i)

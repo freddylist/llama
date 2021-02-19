@@ -1,18 +1,23 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function unshift(list, ...)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validate(list))
 
-	local argc = select('#', ...)
+	local argCount = select('#', ...)
 
 	local new = {}
 
-	for i = 1, argc do
+	for i = 1, argCount do
 		new[i] = select(i, ...)
 	end
 
 	for i = 1, #list do
-		new[argc + i] = list[i]
+		new[argCount + i] = list[i]
 	end
 
 	return new

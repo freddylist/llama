@@ -1,9 +1,13 @@
+local List = script.Parent
+local copy = require(List.copy)
 
-local copy = require(script.Parent.copy)
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.optional(t.callback))
 
 local function sort(list, comparator)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validate(list, comparator))
 	
 	local new = copy(list)
 

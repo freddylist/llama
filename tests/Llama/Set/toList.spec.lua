@@ -9,7 +9,15 @@ return function()
 	local Set = Llama.Set
 	local toList = Set.toList
 
-	it("should not mutate the given table", function()
+	it("should validate types", function()
+		local _, err = pcall(function()
+			toList(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
+	it("should not mutate passed in tables", function()
 		local a = {
 			foo = true,
 			bar = true,
@@ -44,7 +52,7 @@ return function()
 		expect(#b).to.equal(3)
 
 		for _, key in ipairs(b) do
-			expect(keyCount[key]).never.to.equal(nil)
+			expect(keyCount[key]).to.be.ok()
 			keyCount[key] = keyCount[key] - 1
 		end
 
@@ -56,7 +64,7 @@ return function()
 	it("should work with an empty table", function()
 		local a = toList({})
 
-		expect(next(a)).to.equal(nil)
+		expect(next(a)).never.to.be.ok()
 	end)
 
 	it("should contain a None element if there is a None key in the set", function()
@@ -73,7 +81,7 @@ return function()
 		expect(#b).to.equal(2)
 
 		for _, key in ipairs(b) do
-			expect(keyCount[key]).never.to.equal(nil)
+			expect(keyCount[key]).to.be.ok()
 			keyCount[key] = keyCount[key] - 1
 		end
 		

@@ -1,10 +1,16 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.optional(t.intersection(t.integer, t.numberMin(1))))
 
 local function insert(list, index, ...)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validate(list, index))
 
 	local len = #list
-	assert(index >= 1 and index <= len + 1, "index must be in bounds of list")
+
+	assert(index <= len + 1, "index out of bounds")
 
 	local new = {}
 	local resultIndex = 1

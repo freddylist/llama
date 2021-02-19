@@ -1,18 +1,26 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local indexType = t.optional(t.intersection(t.integer, t.numberMin(1)))
+local validate = t.tuple(t.table, indexType, indexType)
 
 local function slice(list, from, to)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validate(list, from, to))
 	
 	local len = #list
+
 	from = from or 1
 	to = to or len
 
-	assert(from <= to, "start index must be less than or equal to end index")
+	assert(to <= len, "index out of bounds")
+	assert(from <= to, "start index cannot be greater than end index")
 
 	local new = {}
 	local index = 1
 
-	for i = math.max(1, from), math.min(to, len) do
+	for i = from, to do
 		new[index] = list[i]
 		index = index + 1
 	end

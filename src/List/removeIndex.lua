@@ -1,9 +1,18 @@
+local List = script.Parent
+local toSet = require(List.toSet)
 
-local toSet = require(script.Parent.toSet)
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validateList = t.table
+local validateIndex = t.intersection(t.integer, t.numberMin(1))
 
 local function removeIndex(list, ...)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validateList(list))
+
+	for i = 1, select('#', ...) do
+		assert(validateIndex(select(i, ...)))
+	end
 	
 	local new = {}
 	local removeIndices = toSet({...})

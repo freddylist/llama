@@ -7,46 +7,53 @@ return function()
 	local List = Llama.List
 	local flatten = List.flatten
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			flatten(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
 		expect(flatten(a)).never.to.equal(a)
 	end)
 
-	it("should not mutate the given table", function()
-		local a = {
-			"foo",
-			{
-				"bar",
-				"baz"
-			}
-		}
+	it("should not mutate passed in tables", function()
+		local a = { "foo", "bar" }
+		local mutations = 0
+
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
 
 		flatten(a)
 
-		expect(a[2][1]).to.equal("bar")
-		expect(a[2][2]).to.equal("baz")
-		expect(a[3]).to.equal(nil)
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should flatten the given table", function()
-		local bumpy = {
+		local a = {
 			{
-				"hi",
-				"hello",
+				"foo",
+				"bar",
 			}, {
-				"oof",
 				"baz",
+				"qux",
 			}
 		}
 		local flattened = {
-			"hi",
-			"hello",
-			"oof",
+			"foo",
+			"bar",
 			"baz",
+			"qux",
 		}
 
-		local b = flatten(bumpy)
+		local b = flatten(a)
 
 		for k, v in pairs(b) do
 			expect(v).to.equal(flattened[k])
@@ -57,21 +64,21 @@ return function()
 		local a = {
 			"foo",
 			{
+				"bar",
 				"baz",
-				"foobar",
 			}, {
 				"bar",
-				"zab",
+				"baz",
 			},
-			"zub",
+			"qux",
 		}
 		local flattened = {
 			"foo",
-			"baz",
-			"foobar",
 			"bar",
-			"zab",
-			"zub",
+			"baz",
+			"bar",
+			"baz",
+			"qux",
 		}
 
 		local b = flatten(a, function(v)

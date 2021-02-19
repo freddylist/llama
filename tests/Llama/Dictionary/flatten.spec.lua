@@ -7,73 +7,83 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local flatten = Dictionary.flatten
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			flatten(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
 		expect(flatten(a)).never.to.equal(a)
 	end)
 
-	it("should not mutate the given table", function()
+	it("should not mutate passed in tables", function()
 		local a = {
-			foo = "foo",
-			foobar = {
-				bar = "bar",
-				baz = "baz"
-			}
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
+		local mutations = 0
+
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
 
 		flatten(a)
 
-		expect(a.foobar.bar).to.equal("bar")
-		expect(a.foobar.baz).to.equal("baz")
-		expect(a.bar).to.equal(nil)
-		expect(a.baz).to.equal(nil)
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should flatten the given table", function()
-		local bumpy = {
-			bump1 = {
-				foo = "hi",
-				bar = "hello",
+		local a = {
+			foo = {
+				bar = 1,
+				baz = 2,
 			},
-			bump2 = {
-				oof = "oof",
-				baz = "baz",
+			oof = {
+				rab = 3,
+				zab = 4,
 			}
 		}
 
-		local b = flatten(bumpy)
+		local b = flatten(a)
 
-		expect(b.foo).to.equal(bumpy.bump1.foo)
-		expect(b.bar).to.equal(bumpy.bump1.bar)
-		expect(b.oof).to.equal(bumpy.bump2.oof)
-		expect(b.baz).to.equal(bumpy.bump2.baz)
-		expect(b.bump1).to.equal(nil)
-		expect(b.bump2).to.equal(nil)
+		expect(b.bar).to.equal(a.foo.bar)
+		expect(b.baz).to.equal(a.foo.baz)
+		expect(b.rab).to.equal(a.oof.rab)
+		expect(b.zab).to.equal(a.oof.zab)
+		expect(b.foo).never.to.be.ok()
+		expect(b.oof).never.to.be.ok()
 	end)
 
-	it("should keep higher entries", function()
+	it("should keep higher level entries", function()
 		local a = {
-			baz = "hi",
+			foo = 1,
 			bar = {
-				baz = "hi"
+				foo = 2,
 			},
 		}
 
 		local b = flatten(a)
 
-		expect(b.baz).to.equal("hi")
+		expect(b.foo).to.equal(1)
 	end)
 
 	it("should flatten completely", function()
 		local a = {
-			uno = 1,
-			bar = {
-				dos = 2,
-				foo = {
-					tres = 3,
-					baz = {
-						quatro = 4,
+			foo = 1,
+			foobar = {
+				bar = 2,
+				barbaz = {
+					baz = 3,
+					bazqux = {
+						qux = 4,
 					}
 				}
 			},
@@ -81,20 +91,19 @@ return function()
 
 		local b = flatten(a)
 
-		expect(b.uno).to.equal(1)
-		expect(b.dos).to.equal(2)
-		expect(b.tres).to.equal(3)
-		expect(b.quatro).to.equal(4)
-		expect(b.bar).to.equal(nil)
-		expect(b.foo).to.equal(nil)
-		expect(b.baz).to.equal(nil)
+		expect(b.foo).to.equal(1)
+		expect(b.bar).to.equal(2)
+		expect(b.baz).to.equal(3)
+		expect(b.qux).to.equal(4)
+		expect(b.foobar).never.to.be.ok()
+		expect(b.barbaz).never.to.be.ok()
+		expect(b.bazqux).never.to.be.ok()
 	end)
 
-	it("should work with an empty list", function()
+	it("should work with an empty table", function()
 		local a = {}
 		local b = flatten(a)
 
 		expect(b).to.be.a("table")
-		expect(b).never.to.equal(a)
 	end)
 end

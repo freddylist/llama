@@ -9,13 +9,21 @@ return function()
 	local List = Llama.List
 	local zipAll = List.zipAll
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			zipAll(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
 		expect(zipAll(a, {})).never.to.equal(a)
 	end)
 	
-	it("should not mutate the given table(s)", function()
+	it("should not mutate passed in tables", function()
 		local a = { 1, 2, 3 }
 		local b = { 4, 5, 6 }
 		local mutationsA = 0
@@ -55,8 +63,8 @@ return function()
 	end)
 
 	it("should zip as much as possible, replacing non existant entries with None", function()
-		local a = {1, 2, 3}
-		local b = {4, 5}
+		local a = { 1, 2, 3 }
+		local b = { 4, 5 }
 		local zipped = zipAll(a, b)
 
 		expect(zipped[3][1]).to.equal(3)

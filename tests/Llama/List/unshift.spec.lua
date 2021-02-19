@@ -7,30 +7,38 @@ return function()
 	local List = Llama.List
 	local unshift = List.unshift
 
-	it("should return a new table", function()
-		local list = {1, 2, 3}
+	it("should validate types", function()
+		local _, err = pcall(function()
+			unshift(0)
+		end)
 
-		expect(unshift(list)).never.to.equal(list)
+		expect(string.find(err, "expected, got")).to.be.ok()
 	end)
 
-	it("should not mutate the original list", function()
-		local list = {false, "foo", 3}
+	it("should return a new table", function()
+		local a = { 1, 2, 3 }
+
+		expect(unshift(a)).never.to.equal(a)
+	end)
+
+	it("should not mutate passed in tables", function()
+		local a = { "foo", "bar" }
 		local mutations = 0
 
-		setmetatable(list, {
+		setmetatable(a, {
 			__newindex = function()
 				mutations = mutations + 1
-			end
+			end,
 		})
 
-		unshift(list, 5)
+		unshift(a, "baz")
 
 		expect(mutations).to.equal(0)
 	end)
 
 	it("should add values to the beginning of provided list", function()
-		local list = {1, 2, 3}
-		local result = unshift(list, 4, 5, 6)
+		local a = { 1, 2, 3 }
+		local result = unshift(a, 4, 5, 6)
 
 		expect(result[1]).to.equal(4)
 		expect(result[2]).to.equal(5)

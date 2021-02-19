@@ -7,35 +7,45 @@ return function()
 	local List = Llama.List
 	local sort = List.sort
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			sort(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
 		expect(sort(a)).never.to.equal(a)
 	end)
 
-	it("should not mutate the given table", function()
-		local a = {77, "foo", 2}
-		local function order(first, second)
-			return tostring(first) < tostring(second)
-		end
-		sort(a, order)
+	it("should not mutate passed in tables", function()
+		local a = { "foo", "bar" }
+		local mutations = 0
 
-		expect(#a).to.equal(3)
-		expect(a[1]).to.equal(77)
-		expect(a[2]).to.equal("foo")
-		expect(a[3]).to.equal(2)
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
+
+		sort(a)
+
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should contain the same elements from the given table", function()
 		local a = {
-			"Foo",
-			"Bar",
-			"Test"
+			"foo",
+			"bar",
+			"baz",
 		}
 		local elementSet = {
-			Foo = true,
-			Bar = true,
-			Test = true
+			foo = true,
+			bar = true,
+			baz = true,
 		}
 		local b = sort(a)
 
@@ -46,27 +56,31 @@ return function()
 	end)
 
 	it("should sort with the default table.sort when no callback is given", function()
-		local a = {4, 2, 5, 3, 1}
+		local a = { 4, 2, 5, 3, 1 }
 		local b = sort(a)
 
 		table.sort(a)
 
 		expect(#b).to.equal(#a)
+
 		for i = 1, #a do
 			expect(b[i]).to.equal(a[i])
 		end
 	end)
 
 	it("should sort with the given callback", function()
-		local a = {1, 2, 5, 3, 4}
-		local function order(first, second)
+		local a = { 1, 2, 5, 3, 4 }
+
+		local function comparator(first, second)
 			return first > second
 		end
-		local b = sort(a, order)
 
-		table.sort(a, order)
+		local b = sort(a, comparator)
+
+		table.sort(a, comparator)
 
 		expect(#b).to.equal(#a)
+
 		for i = 1, #a do
 			expect(b[i]).to.equal(a[i])
 		end

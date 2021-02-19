@@ -1,24 +1,28 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.intersection(t.integer, t.numberMin(1)))
 
 local function set(list, index, value)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validate(list, index))
 	
 	local len = #list
 
-	assert(index <= len, "index must be less than or equal to the list length")
-	assert(index >= 1, "index must be greater than or equal to 1")
+	assert(index <= len + 1, "index out of bounds")
 
 	local new = {}
-	local resultIndex = 1
+	local indexNew = 1
 
 	for i = 1, len do
 		if i == index then
-			new[resultIndex] = value
+			new[indexNew] = value
 		else
-			new[resultIndex] = list[i]
+			new[indexNew] = list[i]
 		end
 
-		resultIndex = resultIndex + 1
+		indexNew = indexNew + 1
 	end
 
 	return new

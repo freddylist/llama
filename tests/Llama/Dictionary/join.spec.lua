@@ -9,6 +9,21 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local join = Dictionary.join
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				join(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
@@ -33,7 +48,7 @@ return function()
 		expect(c.baz).to.equal(b.baz)
 	end)
 
-	it("should remove values set to None", function()
+	it("should remove None values", function()
 		local a = {
 			foo = "foo-a",
 		}
@@ -44,7 +59,7 @@ return function()
 
 		local c = join(a, b)
 
-		expect(c.foo).to.equal(nil)
+		expect(c.foo).never.to.be.ok()
 	end)
 
 	it("should not mutate passed in tables", function()
@@ -72,7 +87,6 @@ return function()
 
 		expect(mutationsA).to.equal(0)
 		expect(mutationsB).to.equal(0)
-		expect(b.foo).to.equal("foo-b")
 	end)
 
 	it("should accept arbitrary numbers of tables", function()

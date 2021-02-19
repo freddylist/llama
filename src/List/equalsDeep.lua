@@ -1,15 +1,21 @@
+local Dictionary = script.Parent
 
-local equalObjects = require(script.Parent.Parent.equalObjects)
+local Llama = Dictionary.Parent
+local equalObjects = require(Llama.equalObjects)
 
-local function equalsDeepOneWay(object, comparison)
-	if type(object) == "table" and type(comparison) == "table" then
-		for i = 1, #object do
-			if not equalsDeepOneWay(object[i], comparison[i]) then
-				return false
-			end
-		end
-	else
-		if object ~= comparison then
+local function compareDeep(a, b)
+	if type(a) ~= "table" or type(b) ~= "table" then
+		return a == b
+	end
+
+	local aLen = #a
+
+	if aLen ~= #b then
+		return false
+	end
+
+	for i = 1, aLen do
+		if not compareDeep(a[i], b[i]) then
 			return false
 		end
 	end
@@ -22,19 +28,14 @@ local function equalsDeep(...)
 		return true
 	end
 
-	local argc = select('#', ...)
+	local argCount = select('#', ...)
+	local firstObject = select(1, ...)
 
-	for i = 1, argc do
-		local dictionary = select(i, ...)
+	for i = 2, argCount do
+		local object = select(i, ...)
 
-		for j = 1, argc do
-			if j ~= i then
-				local compare = select(j, ...)
-				
-				if not equalsDeepOneWay(dictionary, compare) then
-					return false
-				end
-			end
+		if not compareDeep(firstObject, object) then
+			return false
 		end
 	end
 

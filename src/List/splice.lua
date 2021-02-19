@@ -1,35 +1,38 @@
+local List = script.Parent
 
-local function splice(list, start, finish, ...)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+local Llama = List.Parent
+local t = require(Llama.t)
 
-	local startType = type(start)
-	assert(startType == "number" and start % 1 == 0, "expected an integer for second argument, got " .. startType)
+local indexType = t.optional(t.intersection(t.integer, t.numberMin(1)))
+local validate = t.tuple(t.table, indexType, indexType)
 
-	local finishType = type(finish)
-	assert(finishType == "number" and finish % 1 == 0, "expected an integer for third argument, got " .. finishType)
+local function splice(list, from, to, ...)
+	assert(validate(list, from, to))
 
-	assert(start <= finish, "start index must be less than or equal to end index")
+	local len = #list
+
+	from = from or 1
+	to = to or len + 1
+
+	assert(to <= len + 1, "index out of bounds")
+	assert(from <= to, "start index cannot be greater than end index")
 
 	local new = {}
 	local index = 1
-	local len = #list
 
-	start = math.max(start, 1)
-	finish = math.min(start, len)
+	for i = 1, from - 1 do
+		new[index] = list[i]
+		index = index + 1
+	end
 
-	for i = 1, len do
-		if i == start then
-			for j = 1, select('#', ...) do
-				new[index] = select(j, ...)
-				index = index + 1
-			end
+	for i = 1, select('#', ...) do
+		new[index] = select(i, ...)
+		index = index + 1
+	end
 
-			i = finish
-		else
-			new[index] = list[i]
-			index = index + 1
-		end
+	for i = to + 1, len do
+		new[index] = list[i]
+		index = index + 1
 	end
 
 	return new

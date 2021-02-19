@@ -1,14 +1,26 @@
+local Set = script.Parent
+
+local Llama = Set.Parent
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function intersect(...)
 	local new = {}
-	local argc = select('#', ...)
-	local first = select(1, ...)
+	local argCount = select('#', ...)
+	local firstSet = select(1, ...)
 
-	for k, _ in pairs(first) do
+	assert(validate(firstSet))
+
+	for k, _ in pairs(firstSet) do
 		local intersects = true
 
-		for i = 2, argc do
-			if select(i, ...)[k] == nil then
+		for i = 2, argCount do
+			local set = select(i, ...)
+
+			assert(validate(set))
+
+			if set[k] == nil then
 				intersects = false
 				break
 			end

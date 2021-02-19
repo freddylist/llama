@@ -9,44 +9,56 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local values = Dictionary.values
 
-	it("should not mutate the given table", function()
+	it("should validate types", function()
+		local _, err = pcall(function()
+			values(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
+	it("should return a new table", function()
+		local a = {}
+
+		expect(values({a})).never.to.equal(a)
+	end)
+
+	it("should not mutate passed in tables", function()
 		local a = {
-			Foo = "FooValue",
-			Bar = "BarValue"
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
-		local aCopy = {
-			Foo = "FooValue",
-			Bar = "BarValue"
-		}
+		local mutations = 0
+
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
 
 		values(a)
 
-		for key, value in pairs(a) do
-			expect(aCopy[key]).to.equal(value)
-		end
-
-		for key, value in pairs(aCopy) do
-			expect(a[key]).to.equal(value)
-		end
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should return the correct values", function()
 		local a = {
-			Foo = "FooValue",
-			Bar = "BarValue",
-			Test = "TestValue"
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
 		local valueCount = {
-			FooValue = 1,
-			BarValue = 1,
-			TestValue = 1
+			[1] = 1,
+			[2] = 1,
+			[3] = 1,
 		}
 		local b = values(a)
 
 		expect(#b).to.equal(3)
 
 		for _, value in ipairs(b) do
-			expect(valueCount[value]).never.to.equal(nil)
+			expect(valueCount[value]).to.be.ok()
 			valueCount[value] = valueCount[value] - 1
 		end
 
@@ -57,20 +69,20 @@ return function()
 
 	it("should return duplicates if two values are the same", function()
 		local a = {
-			Foo = "FooValue",
-			Bar = "BarValue",
-			Test = "FooValue"
+			foo = 1,
+			bar = 2,
+			baz = 1,
 		}
 		local valueCount = {
-			FooValue = 2,
-			BarValue = 1,
+			[1] = 2,
+			[2] = 1,
 		}
 		local b = values(a)
 
 		expect(#b).to.equal(3)
 
 		for _, value in ipairs(b) do
-			expect(valueCount[value]).never.to.equal(nil)
+			expect(valueCount[value]).to.be.ok()
 			valueCount[value] = valueCount[value] - 1
 		end
 
@@ -82,24 +94,24 @@ return function()
 	it("should work with an empty table", function()
 		local a = values({})
 
-		expect(next(a)).to.equal(nil)
+		expect(next(a)).never.to.be.ok()
 	end)
 
 	it("should contain a None element if there is a None value in the dictionary", function()
 		local a = {
-			Foo = None,
-			Bar = "BarValue"
+			foo = None,
+			bar = 2,
 		}
 		local valueCount = {
 			[None] = 1,
-			BarValue = 1
+			[2] = 1,
 		}
 		local b = values(a)
 
 		expect(#b).to.equal(2)
 
 		for _, value in ipairs(b) do
-			expect(valueCount[value]).never.to.equal(nil)
+			expect(valueCount[value]).to.be.ok()
 			valueCount[value] = valueCount[value] - 1
 		end
 		

@@ -9,44 +9,54 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local keys = Dictionary.keys
 
-	it("should not mutate the given table", function()
+	it("should validate types", function()
+		local _, err = pcall(function()
+			keys(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
+	it("should return a new table", function()
+		local a = {}
+
+		expect(keys({a})).never.to.equal(a)
+	end)
+
+	it("should not mutate passed in tables", function()
 		local a = {
-			Foo = "FooValue",
-			Bar = "BarValue"
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
-		local aCopy = {
-			Foo = "FooValue",
-			Bar = "BarValue"
-		}
+		local mutations = 0
+
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
 
 		keys(a)
 
-		for key, value in pairs(a) do
-			expect(aCopy[key]).to.equal(value)
-		end
-
-		for key, value in pairs(aCopy) do
-			expect(a[key]).to.equal(value)
-		end
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should return the correct keys", function()
 		local a = {
-			Foo = "FooValue",
-			Bar = "BarValue",
-			Test = "TestValue"
+			foo = 1,
+			bar = 2,
 		}
 		local keyCount = {
-			Foo = 1,
-			Bar = 1,
-			Test = 1
+			foo = 1,
+			bar = 1,
 		}
 		local b = keys(a)
 
-		expect(#b).to.equal(3)
+		expect(#b).to.equal(2)
 
 		for _, key in ipairs(b) do
-			expect(keyCount[key]).never.to.equal(nil)
+			expect(keyCount[key]).to.be.ok()
 			keyCount[key] = keyCount[key] - 1
 		end
 
@@ -58,24 +68,24 @@ return function()
 	it("should work with an empty table", function()
 		local a = keys({})
 
-		expect(next(a)).to.equal(nil)
+		expect(next(a)).never.to.be.ok()
 	end)
 
 	it("should contain a None element if there is a None key in the dictionary", function()
 		local a = {
-			[None] = "Foo",
-			Bar = "BarValue"
+			[None] = "foo",
+			bar = "bar"
 		}
 		local keyCount = {
 			[None] = 1,
-			Bar = 1
+			bar = 1
 		}
 		local b = keys(a)
 
 		expect(#b).to.equal(2)
 
 		for _, key in ipairs(b) do
-			expect(keyCount[key]).never.to.equal(nil)
+			expect(keyCount[key]).to.be.ok()
 			keyCount[key] = keyCount[key] - 1
 		end
 		

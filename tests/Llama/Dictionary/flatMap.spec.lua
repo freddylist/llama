@@ -7,6 +7,22 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local flatMap = Dictionary.flatMap
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+			{ 0, function() end }
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				flatMap(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
@@ -15,34 +31,40 @@ return function()
 		end)).never.to.equal(a)
 	end)
 
-	it("should not mutate the given table", function()
+	it("should not mutate passed in tables", function()
 		local a = {
-			foo = "foo",
-			foobar = {
-				bar = "bar",
-				baz = "baz"
-			}
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
+		local mutations = 0
 
-		flatMap(a, function(v)
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
+
+		local function doNothing(v)
 			return v
-		end)
+		end
 
-		expect(a.foobar.bar).to.equal("bar")
-		expect(a.foobar.baz).to.equal("baz")
-		expect(a.bar).to.equal(nil)
-		expect(a.baz).to.equal(nil)
+		flatMap(a, doNothing)
+
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should call the callback for each element", function()
 		local a = {
-			foo = "foo", 
-			bar = "bar", 
-			baz = "baz",
+			foo = 1, 
+			bar = 2, 
+			baz = 3,
 		}
 		local copy = {}
+
 		flatMap(a, function(v, index)
 			copy[index] = v
+
 			return v
 		end)
 
@@ -57,16 +79,19 @@ return function()
 
 	it("should set the new values to the result of the given callback", function()
 		local a = {
-			foo = "foo", 
-			bar = "bar", 
-			baz = "baz",
+			foo = 1, 
+			bar = 2,
+			baz = 3,
 		}
-		local b = flatMap(a, function(v)
-			return v .. "bar"
-		end)
+
+		local function double(v)
+			return v * 2
+		end
+
+		local b = flatMap(a, double)
 
 		for k, v in pairs(b) do
-			expect(a[k] .. "bar").to.equal(v)
+			expect(a[k] * 2).to.equal(v)
 		end
 	end)
 
@@ -76,42 +101,47 @@ return function()
 			bar = "bar", 
 			baz = "baz",
 		}
-		local b = flatMap(a, function()
+
+		local function nothing()
 			return nil
-		end)
+		end
+
+		local b = flatMap(a, nothing)
 
 		expect(#b).to.equal(0)
 	end)
 
 	it("should map and flatten the given table", function()
-		local bumpy = {
-			bump1 = {
-				foo = "hi",
-				bar = "hello",
+		local a = {
+			foo = {
+				bar = 1,
+				baz = 2,
 			},
-			bump2 = {
-				oof = "oof",
-				baz = "baz",
+			oof = {
+				rab = 3,
+				zab = 4,
 			}
 		}
 
-		local b = flatMap(bumpy, function()
-			return "no"
-		end)
+		local function double(v)
+			return v * 2
+		end
 
-		expect(b.foo).to.equal("no")
-		expect(b.bar).to.equal("no")
-		expect(b.oof).to.equal("no")
-		expect(b.baz).to.equal("no")
-		expect(b.bump1).to.equal(nil)
-		expect(b.bump2).to.equal(nil)
+		local b = flatMap(a, double)
+
+		expect(b.bar).to.equal(double(a.foo.bar))
+		expect(b.baz).to.equal(double(a.foo.baz))
+		expect(b.rab).to.equal(double(a.oof.rab))
+		expect(b.zab).to.equal(double(a.oof.zab))
+		expect(b.foo).never.to.be.ok()
+		expect(b.oof).never.to.be.ok()
 	end)
 
-	it("should keep higher entries", function()
+	it("should keep higher level entries", function()
 		local a = {
-			baz = "hi",
+			foo = 1,
 			bar = {
-				baz = "hello"
+				foo = 2
 			},
 		}
 
@@ -119,34 +149,36 @@ return function()
 			return v
 		end)
 
-		expect(b.baz).to.equal("hi")
+		expect(b.foo).to.equal(1)
 	end)
 
 	it("should flatten completely", function()
 		local a = {
-			uno = 1,
-			bar = {
-				dos = 2,
-				foo = {
-					tres = 3,
-					baz = {
-						quatro = 4,
+			foo = 1,
+			foobar = {
+				bar = 2,
+				barbaz = {
+					baz = 3,
+					bazqux = {
+						qux = 4,
 					}
 				}
 			},
 		}
 
-		local b = flatMap(a, function(v)
+		local function doNothing(v)
 			return v
-		end)
+		end
 
-		expect(b.uno).to.equal(1)
-		expect(b.dos).to.equal(2)
-		expect(b.tres).to.equal(3)
-		expect(b.quatro).to.equal(4)
-		expect(b.bar).to.equal(nil)
-		expect(b.foo).to.equal(nil)
-		expect(b.baz).to.equal(nil)
+		local b = flatMap(a, doNothing)
+
+		expect(b.foo).to.equal(1)
+		expect(b.bar).to.equal(2)
+		expect(b.baz).to.equal(3)
+		expect(b.qux).to.equal(4)
+		expect(b.foobar).never.to.be.ok()
+		expect(b.barbaz).never.to.be.ok()
+		expect(b.bazqux).never.to.be.ok()
 	end)
 
 	it("should work with an empty list", function()

@@ -1,9 +1,20 @@
+local List = script.Parent
 
-local function find(list, value, from)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
-	
-	for i = from or #list, 1, -1 do
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.optional(t.any), t.optional(t.intersection(t.integer, t.numberMin(1))))
+
+local function findLast(list, value, from)
+	assert(validate(list, value, from))
+
+	local len = #list
+
+	from = from or len
+
+	assert(len == 0 or from <= len, "index out of bounds")
+
+	for i = from, 1, -1 do
 		if list[i] == value then
 			return i
 		end
@@ -12,4 +23,4 @@ local function find(list, value, from)
 	return nil
 end
 
-return find
+return findLast

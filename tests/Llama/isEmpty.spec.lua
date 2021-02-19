@@ -16,8 +16,8 @@ return function()
 
 	it("should return false for not empty tables", function()
 		local dictionary = {
-			key = "value",
-			timmy = "jimmy",
+			foo = 1,
+			bar = 2,
 		}
 
 		expect(isEmpty({ 1, 2, 3 })).to.equal(false)

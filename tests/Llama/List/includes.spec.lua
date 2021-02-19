@@ -7,6 +7,14 @@ return function()
 	local List = Llama.List
 	local includes = List.includes
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			includes(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a boolean", function()
 		local a = {}
 
@@ -21,6 +29,6 @@ return function()
 		}
 
 		expect(includes(a, "foo")).to.equal(true)
-		expect(includes(a, "yeet")).to.equal(false)
+		expect(includes(a, "qux")).to.equal(false)
 	end)
 end

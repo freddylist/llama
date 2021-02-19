@@ -7,43 +7,59 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local count = Dictionary.count
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+			{ 0, function() end }
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				count(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a number", function()
 		expect(count({})).to.be.a("number")
 	end)
 
-	it("should provide an accurate number of elements without a provided predicate", function()
+	it("should return number of entries even without a predicate", function()
 		local a = {
-			banana = "avocado",
-			apple = "grape",
-			pineapple = "cucumber",
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
 
 		expect(count(a)).to.equal(3)
 	end)
 
-	it("should provide an accurate number of elements with provided predicate", function()
+	it("should return number of entries that pass given predicate", function()
 		local a = {
-			banana = "avocado",
-			apple = "grape",
-			pineapple = "cucumber",
-			peach = "grape",
+			foo = 1,
+			bar = 2,
+			baz = 3,
+			qux = 3,
 		}
 
-		local function grapesOnly(v)
-			return string.find(v, "grape")
+		local function only3s(v)
+			return v == 3
 		end
 
-		expect(count(a, grapesOnly)).to.equal(2)
+		expect(count(a, only3s)).to.equal(2)
 	end)
 
 	it("should provide each value and key to the predicate", function()
 		local a = {
-			banana = "avocado",
+			foo = 1,
 		}
 
 		local function predicate(v, k)
-			expect(v).to.equal(a.banana)
-			expect(k).to.equal("banana")
+			expect(v).to.equal(a.foo)
+			expect(k).to.equal("foo")
 		end
 
 		count(a, predicate)
@@ -51,9 +67,9 @@ return function()
 
 	it("should call the predicate for each value", function()
 		local a = {
-			banana = "avocado",
-			apple = "grape",
-			pineapple = "cucumber",
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
 		local callCount = 0
 

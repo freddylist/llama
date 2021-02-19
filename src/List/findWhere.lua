@@ -1,12 +1,20 @@
+local List = script.Parent
 
-local function find(list, predicate, from)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
-	
-	local predicateType = type(predicate)
-	assert(predicateType == "function", "expected a function for second argument, got " .. predicateType)
+local Llama = List.Parent
+local t = require(Llama.t)
 
-	for i = from or 1, #list do
+local validate = t.tuple(t.table, t.callback, t.optional(t.intersection(t.integer, t.numberMin(1))))
+
+local function findWhere(list, predicate, from)
+	assert(validate(list, predicate, from))
+
+	local len = #list
+
+	from = from or 1
+
+	assert(len == 0 or from <= len, "index out of bounds")
+
+	for i = from, len do
 		if predicate(list[i], i) then
 			return i
 		end
@@ -15,4 +23,4 @@ local function find(list, predicate, from)
 	return nil
 end
 
-return find
+return findWhere

@@ -1,15 +1,22 @@
+local List = script.Parent
 
-local None = require(script.Parent.Parent.None)
+local Llama = List.Parent
+local None = require(Llama.None)
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function join(...)
 	local new = {}
 
 	local index = 1
 
-	for listIndex = 1, select("#", ...) do
+	for listIndex = 1, select('#', ...) do
 		local list = select(listIndex, ...)
 
-		if list then
+		if list ~= nil then
+			assert(validate(list))
+
 			for i = 1, #list do
 				if list[i] ~= None then
 					new[index] = list[i]

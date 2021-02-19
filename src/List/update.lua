@@ -1,5 +1,8 @@
+local List = script.Parent
+local copy = require(List.copy)
 
-local copy = require(script.Parent.copy)
+local Llama = List.Parent
+local t = require(Llama.t)
 
 local function noUpdate(value)
 	return value
@@ -11,26 +14,22 @@ local function call(callback, ...)
 	end
 end
 
+local optionalCallbackType = t.optional(t.callback)
+local validate = t.tuple(t.table, t.intersection(t.integer, t.numberMin(1)), optionalCallbackType, optionalCallbackType)
+
 local function update(list, index, updater, callback)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
-
-	local indexType = type(index)
-	assert(indexType == "number" and index % 1 == 0, "expected an integer for second argument, got " .. indexType)
-
-	local new = copy(list)
-	local value
+	assert(validate(list, index, updater, callback))
+	assert(index <= #list + 1, "index out of bounds")
 
 	updater = updater or noUpdate
 
+	local new = copy(list)
+
 	if new[index] ~= nil then
-		value = updater(new[index], index)
-		call(callback, true, value, index)
+		new[index] = updater(new[index], index)
 	else
-		value = call(callback, false, index)
+		new[index] = call(callback, index)
 	end
-	
-	new[index] = value
 
 	return new
 end

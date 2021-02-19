@@ -7,6 +7,22 @@ return function()
 	local List = Llama.List
 	local some = List.some
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+			{ 0, function() end},
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				some(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a boolean", function()
 		local function always(bool)
 			return function()
@@ -33,30 +49,29 @@ return function()
 
 	it("should return true if at least one entry passes the predicate", function()
 		local a = {
-			"a",
-			"b",
-			"c",
+			"foo",
+			"bar",
+			"baz",
 		}
 
-		local function aOnly(v)
-			return v == "a"
+		local function onlyFoo(v)
+			return v == "foo"
 		end
 
-		expect(some(a, aOnly)).to.equal(true)
+		expect(some(a, onlyFoo)).to.equal(true)
 	end)
 
 	it("should return false if no entries pass the predicate", function()
 		local a = {
-			"a",
-			"a",
-			"a",
-			"b",
+			"foo",
+			"bar",
+			"baz",
 		}
 
-		local function cOnly(v)
-			return v == "c"
+		local function onlyQux(v)
+			return v == "qux"
 		end
 
-		expect(some(a, cOnly)).to.equal(false)
+		expect(some(a, onlyQux)).to.equal(false)
 	end)
 end

@@ -1,5 +1,13 @@
+local Set = script.Parent
+
+local Llama = Set.Parent
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function add(set, ...)
+	assert(validate(set))
+
 	local new = {}
 
 	for k, _ in pairs(set) do

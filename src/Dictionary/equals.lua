@@ -1,26 +1,41 @@
+local Dictionary = script.Parent
 
-local equalObjects = require(script.Parent.Parent.equalObjects)
+local Llama = Dictionary.Parent
+local equalObjects = require(Llama.equalObjects)
+
+local function compare(a, b)
+	if type(a) ~= "table" or type(b) ~= "table" then
+		return a == b
+	end
+
+	for k, v in pairs(a) do
+		if b[k] ~= v then
+			return false
+		end
+	end
+
+	for k, v in pairs(b) do
+		if a[k] ~= v then
+			return false
+		end
+	end
+
+	return true
+end
 
 local function equals(...)
 	if equalObjects(...) then
 		return true
 	end
 
-	local argc = select('#', ...)
+	local argCount = select('#', ...)
+	local firstObject = select(1, ...)
 
-	for i = 1, argc do
-		local dictionary = select(i, ...)
+	for i = 2, argCount do
+		local object = select(i, ...)
 
-		for j = 1, argc do
-			if j ~= i then
-				local compare = select(j, ...)
-
-				for key, value in pairs(dictionary) do
-					if value ~= compare[key] then
-						return false
-					end
-				end
-			end
+		if not compare(firstObject, object) then
+			return false
 		end
 	end
 

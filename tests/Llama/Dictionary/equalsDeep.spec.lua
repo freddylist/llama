@@ -9,34 +9,32 @@ return function()
 
 	it("should return a boolean", function()
 		local a = {}
-		local b = {}
 
-		expect(equalsDeep(a, b)).to.be.a("boolean")
+		expect(equalsDeep(a, a)).to.be.a("boolean")
+		expect(equalsDeep(a, {})).to.be.a("boolean")
+		expect(equalsDeep({}, { 1 })).to.be.a("boolean")
 	end)
 
-	it("should return whether provided tables and subtables have value equality or not", function()
+	it("should return whether provided tables have value equality", function()
 		local a = {
-			foo = "foo",
-			bar = "bar",
-			baz = "baz",
-			sub = {
-				bob = "avocado",
+			foo = 1,
+			bar = 2,
+			foobar = {
+				baz = 3,
 			},
 		}
 		local b = {
-			foo = "foo",
-			bar = "bar",
-			baz = "baz",
-			sub = {
-				bob = "avocado",
+			foo = 1,
+			bar = 2,
+			foobar = {
+				baz = 3,
 			},
 		}
 		local c = {
-			oof = "foo",
-			rab = "bar",
-			baz = "zab",
-			sub = {
-				bob = "avocado",
+			oof = 1,
+			rab = 2,
+			raboof = {
+				zab = 3,
 			},
 		}
 
@@ -44,18 +42,18 @@ return function()
 		expect(equalsDeep(a, c)).to.equal(false)
 	end)
 
-	it("should work with multiple subtables", function()
+	it("should work with multiple levels of subtables", function()
 		local a = {
-			sub = {
-				bus = {
-					hi = "hello"
+			foo = {
+				bar = {
+					baz = "hi"
 				}
 			}
 		}
 		local b = {
-			sub = {
-				bus = {
-					hi = "hello"
+			foo = {
+				bar = {
+					baz = "hi"
 				}
 			}
 		}
@@ -65,43 +63,41 @@ return function()
 
 	it("should work with an arbitrary number of tables", function()
 		local a = {
-			foo = "foo",
-			bar = "bar",
-			baz = "baz",
-			yeet = {
-				"delete",
+			foo = 1,
+			bar = 2,
+			baz = {
+				3,
 			},
 		}
 		local b = a
 		local c = {
-			foo = "foo",
-			bar = "bar",
-			baz = "baz",
-			yeet = {
-				"delete",
+			foo = 1,
+			bar = 2,
+			baz = {
+				3,
 			},
 		}
 		local d = {
-			oof = "foo",
-			rab = "bar",
-			baz = "zab",
+			oof = 1,
+			rab = 2,
+			zab = 3,
 			badger = {
 				badger = {
 					badger = {
-						mushroom = "yes",
+						mushroom = true,
 					},
 				},
 			},
 		}
 		local e = d
 		local f = {
-			oof = "foo",
-			rab = "bar",
-			baz = "zab",
+			oof = 1,
+			rab = 2,
+			zab = 3,
 			badger = {
 				badger = {
 					badger = {
-						mushroom = "yes",
+						mushroom = true,
 					},
 				},
 			},
@@ -120,5 +116,10 @@ return function()
 
 	it("should work with zero tables", function()
 		expect(equalsDeep()).to.equal(true)
+	end)
+
+	it("should work for any type of objects", function()
+		expect(equalsDeep(1, 1)).to.equal(true)
+		expect(equalsDeep(1, "a")).to.equal(false)
 	end)
 end

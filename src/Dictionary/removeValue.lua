@@ -1,11 +1,18 @@
+local Dictionary = script.Parent
 
-local toSet = require(script.Parent.Parent.List.toSet)
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
 
-local function removeValues(dictionary, ...)
-	local dictionaryType = type(dictionary)
-	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
+local List = Llama.List
+local toSet = require(List.toSet)
+
+local validate = t.table
+
+local function removeValue(dictionary, ...)
+	assert(validate(dictionary))
 	
 	local valuesSet = toSet({...})
+
 	local new = {}
 
 	for k, v in pairs(dictionary) do
@@ -17,4 +24,4 @@ local function removeValues(dictionary, ...)
 	return new
 end
 
-return removeValues
+return removeValue

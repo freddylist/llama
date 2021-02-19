@@ -9,52 +9,67 @@ return function()
 	local List = Llama.List
 	local removeIndex = List.removeIndex
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 1.5 },
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				removeIndex(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
+	it("should return a new table", function()
+		local a = { 1, 2, 3 }
+
+		expect(removeIndex(a, 1)).never.to.equal(a)
+	end)
+
+	it("should not passed in tables", function()
+		local a = { "foo", "bar" }
+		local mutations = 0
+
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
+
+		removeIndex(a, 1)
+
+		expect(mutations).to.equal(0)
+	end)
+
 	it("should remove the element at the given index", function()
 		local a = {
-			"first",
-			"second",
-			"third"
+			"foo",
+			"bar",
+			"baz",
 		}
 
 		local b = removeIndex(a, 2)
 
 		expect(#b).to.equal(2)
-		expect(b[1]).to.equal("first")
-		expect(b[2]).to.equal("third")
-	end)
-
-	it("should not remove any element if index is out of bound", function()
-		local a = {
-			"first",
-			"second",
-			"third"
-		}
-		local b = removeIndex(a, 4)
-
-		expect(#b).to.equal(#a)
-		for i = 1, #a do
-			expect(b[i]).to.equal(a[i])
-		end
-
-		local c = removeIndex(a, -2)
-
-		expect(#c).to.equal(#a)
-		for i = 1, #a do
-			expect(c[i]).to.equal(a[i])
-		end
+		expect(b[1]).to.equal("foo")
+		expect(b[2]).to.equal("baz")
 	end)
 
 	it("should work with a None element", function()
 		local a = {
-			"first",
+			"foo",
 			None,
-			"third"
+			"baz"
 		}
 
 		local b = removeIndex(a, 1)
 
 		expect(#b).to.equal(2)
 		expect(b[1]).to.equal(None)
-		expect(b[2]).to.equal("third")
+		expect(b[2]).to.equal("baz")
 	end)
 end

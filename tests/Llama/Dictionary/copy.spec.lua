@@ -9,15 +9,42 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local copy = Dictionary.copy
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			copy(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
 		local a = {}
 
 		expect(copy(a)).never.to.equal(a)
 	end)
 
+	it("should not mutate passed in tables", function()
+		local mutations = 0
+
+		local a = {
+			foo = 1,
+			bar = 2,
+		}
+
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
+
+		copy(a)
+
+		expect(mutations).to.equal(0)
+	end)
+
 	it("should not remove values set to None", function()
 		local a = {
-			foo = "foo",
+			foo = 1,
 			bar = None,
 		}
 
@@ -26,26 +53,7 @@ return function()
 		expect(b.bar).to.equal(None)
 	end)
 
-	it("should not mutate passed in tables", function()
-		local mutationsA = 0
-
-		local a = {
-			foo = "foo",
-			bar = "bar",
-		}
-
-		setmetatable(a, {
-			__newindex = function()
-				mutationsA = mutationsA + 1
-			end,
-		})
-
-		copy(a)
-
-		expect(mutationsA).to.equal(0)
-	end)
-
-	it("should accept one (or more) tables", function()
+	it("should accept 1 (or more) table(s)", function()
 		expect(function()
 			copy({})
 		end).never.to.throw()
@@ -57,10 +65,10 @@ return function()
 
 	it("should copy the table", function()
 		local a = {
-			heck = "yea",
-			timmy = "jimmy",
-			bob = {
-				tail = "no",
+			foo = 1,
+			bar = 2,
+			foobar = {
+				baz = 3,
 			},
 		}
 

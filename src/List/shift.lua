@@ -1,15 +1,22 @@
+local List = script.Parent
+
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.optional(t.intersection(t.integer, t.numberPositive)))
 
 local function shift(list, shifts)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validate(list, shifts))
 
+	local len = #list
+	
 	shifts = shifts or 1
-	local shiftsType = type(shifts)
-	assert(shiftsType == "number" and shifts % 1 == 0, "expected an integer for second argument, got " .. shiftsType)
+
+	assert(shifts <= len, "index out of bounds")
 	
 	local new = {}
 
-	for i = 1 + shifts, #list do
+	for i = 1 + shifts, len do
 		new[i - shifts] = list[i]
 	end
 

@@ -7,6 +7,14 @@ return function()
 	local Set = Llama.Set
 	local has = Set.has
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			has(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a boolean", function()
 		local a = {}
 
@@ -21,6 +29,6 @@ return function()
 		}
 
 		expect(has(a, "foo")).equal(true)
-		expect(has(a, "yeet")).equal(false)
+		expect(has(a, "qux")).equal(false)
 	end)
 end

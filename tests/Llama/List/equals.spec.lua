@@ -9,9 +9,10 @@ return function()
 
 	it("should return a boolean", function()
 		local a = {}
-		local b = {}
 
-		expect(equals(a, b)).to.be.a("boolean")
+		expect(equals(a, a)).to.be.a("boolean")
+		expect(equals(a, {})).to.be.a("boolean")
+		expect(equals({}, { 1 })).to.be.a("boolean")
 	end)
 
 	it("should return whether provided tables have value equality or not", function()
@@ -51,14 +52,14 @@ return function()
 			"baz",
 		}
 		local d = {
-			"foo",
-			"bar",
+			"oof",
+			"rab",
 			"zab",
 		}
 		local e = d
 		local f = {
-			"foo",
-			"bar",
+			"oof",
+			"rab",
 			"zab",
 		}
 
@@ -74,5 +75,10 @@ return function()
 
 	it("should work with zero tables", function()
 		expect(equals()).to.equal(true)
+	end)
+
+	it("should work for any type of objects", function()
+		expect(equals(1, 1)).to.equal(true)
+		expect(equals(1, "a")).to.equal(false)
 	end)
 end

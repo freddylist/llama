@@ -1,9 +1,13 @@
+local Dictionary = script.Parent
+local copy = require(Dictionary.copy)
 
-local copy = require(script.Parent.copy)
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function removeKey(dictionary, ...)
-	local dictionaryType = type(dictionary)
-	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
+	assert(validate(dictionary))
 	
 	local new = copy(dictionary)
 

@@ -1,7 +1,8 @@
-
 local function equalObjects(...)
-	for i = 1, select('#', ...) - 1 do
-		if select(i, ...) ~= select(i + 1, ...) then
+	local firstObject = select(1, ...)
+
+	for i = 2, select('#', ...) do
+		if firstObject ~= select(i, ...) then
 			return false
 		end
 	end

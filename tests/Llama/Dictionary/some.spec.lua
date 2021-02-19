@@ -7,6 +7,22 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local some = Dictionary.some
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+			{ 0, function() end }
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				some(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a boolean", function()
 		local function always(bool)
 			return function()
@@ -20,7 +36,7 @@ return function()
 
 	it("should pass the value and key to the predicate", function()
 		local a = {
-			foo = "bar",
+			foo = 1,
 		}
 
 		local function predicate(v, k)
@@ -33,30 +49,29 @@ return function()
 
 	it("should return true if at least one entry passes the predicate", function()
 		local a = {
-			foo = "a",
-			baz = "a",
-			foobar = "a",
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
 
-		local function aOnly(v)
-			return v == "a"
+		local function only1s(v)
+			return v == 1
 		end
 
-		expect(some(a, aOnly)).to.equal(true)
+		expect(some(a, only1s)).to.equal(true)
 	end)
 
 	it("should return false if no entries pass the predicate", function()
 		local a = {
-			foo = "a",
-			baz = "a",
-			foobar = "a",
-			frob = "b"
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
 
-		local function cOnly(v)
-			return v == "c"
+		local function only4s(v)
+			return v == 4
 		end
 
-		expect(some(a, cOnly)).to.equal(false)
+		expect(some(a, only4s)).to.equal(false)
 	end)
 end

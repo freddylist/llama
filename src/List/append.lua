@@ -1,1 +1,3 @@
-return require(script.Parent.push)
+local List = script.Parent
+
+return require(List.push)

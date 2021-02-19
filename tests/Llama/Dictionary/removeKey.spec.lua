@@ -7,51 +7,72 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local removeKey = Dictionary.removeKey
 
+	it("should validate types", function()
+		local _, err = pcall(function()
+			removeKey(0)
+		end)
+
+		expect(string.find(err, "expected, got")).to.be.ok()
+	end)
+
 	it("should return a new table", function()
+		local a = {}
+
+		expect(removeKey(a, "foo")).never.to.equal(a)
+	end)
+
+	it("should not mutate passed in tables", function()
 		local a = {
-			llama = "cool",
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
+		local mutations = 0
 
-		local b = removeKey(a, "llama")
+		setmetatable(a, {
+			__newindex = function()
+				mutations = mutations + 1
+			end,
+		})
 
-		expect(b).never.to.equal(a)
-		expect(b).to.be.a("table")
+		removeKey(a, "foo")
+
+		expect(mutations).to.equal(0)
 	end)
 
 	it("should remove a single entry", function()
 		local a = {
-			llama = "cool",
-			cryo = "coolor",
-			mutability = "coolest",
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
 
-		local b = removeKey(a, "mutability")
+		local b = removeKey(a, "baz")
 
-		expect(b.mutability).to.equal(nil)
+		expect(b.baz).never.to.be.ok()
 	end)
 
 	it("should remove multiple entries", function()
 		local a = {
-			llama = "cool",
-			cryo = "coolor",
-			mutability = "coolest",
-			bad = "something",
+			foo = 1,
+			bar = 2,
+			baz = 3,
 		}
 
-		local b = removeKey(a, "mutability", "bad")
+		local b = removeKey(a, "bar", "baz")
 
-		expect(b.mutability).to.equal(nil)
-		expect(b.bad).to.equal(nil)
+		expect(b.bar).never.to.be.ok()
+		expect(b.baz).never.to.be.ok()
 	end)
 
 	it("should work even if entry does not exist", function()
 		local a = {
-			llama = "cool",
-			cryo = "coolor",
+			foo = 1,
+			bar = 2,
 		}
 
 		expect(function()
-			removeKey(a, "mutability")
+			removeKey(a, "baz")
 		end).never.to.throw()
 	end)
 end

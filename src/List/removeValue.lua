@@ -1,9 +1,13 @@
+local List = script.Parent
+local toSet = require(List.toSet)
 
-local toSet = require(script.Parent.Parent.List.toSet)
+local Llama = List.Parent
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function removeValue(list, ...)
-	local listType = type(list)
-	assert(listType == "table", "expected a table for first argument, got " .. listType)
+	assert(validate(list))
 	
 	local valuesSet = toSet({...})
 	local new = {}

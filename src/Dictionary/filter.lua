@@ -1,10 +1,12 @@
+local Dictionary = script.Parent
+
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback)
 
 local function filter(dictionary, filterer)
-	local dictionaryType = type(dictionary)
-	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
-
-	local filtererType = type(filterer)
-	assert(filtererType == "function", "expected a function for second argument, got " .. filtererType)
+	assert(validate(dictionary, filterer))
 
 	local new = {}
 

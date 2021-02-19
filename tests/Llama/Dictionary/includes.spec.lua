@@ -7,6 +7,21 @@ return function()
 	local Dictionary = Llama.Dictionary
 	local includes = Dictionary.includes
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ 0, 0 },
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				includes(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a boolean", function()
 		local a = {}
 
@@ -21,6 +36,6 @@ return function()
 		}
 
 		expect(includes(a, "oof")).to.equal(true)
-		expect(includes(a, "yeet")).to.equal(false)
+		expect(includes(a, "foo")).to.equal(false)
 	end)
 end

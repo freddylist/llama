@@ -7,15 +7,30 @@ return function()
 	local List = Llama.List
 	local count = List.count
 
+	it("should validate types", function()
+		local args = {
+			{ 0 },
+			{ {}, 0 },
+		}
+
+		for i = 1, #args do
+			local _, err = pcall(function()
+				count(unpack(args[i]))
+			end)
+
+			expect(string.find(err, "expected, got")).to.be.ok()
+		end
+	end)
+
 	it("should return a number", function()
 		expect(count({})).to.be.a("number")
 	end)
 
 	it("should provide an accurate number of elements without a provided predicate", function()
 		local a = {
-			"avocado",
-			"grape",
-			"cucumber",
+			"foo",
+			"bar",
+			"baz",
 		}
 
 		expect(count(a)).to.equal(3)
@@ -23,22 +38,22 @@ return function()
 
 	it("should provide an accurate number of elements with provided predicate", function()
 		local a = {
-			"avocado",
-			"grape",
-			"cucumber",
-			"grape",
+			"foo",
+			"bar",
+			"baz",
+			"bar",
 		}
 
-		local function grapesOnly(v)
-			return string.find(v, "grape")
+		local function onlyBar(v)
+			return string.find(v, "bar")
 		end
 
-		expect(count(a, grapesOnly)).to.equal(2)
+		expect(count(a, onlyBar)).to.equal(2)
 	end)
 
 	it("should provide each value and index to the predicate", function()
 		local a = {
-			"avocado",
+			"foo",
 		}
 
 		local function predicate(v, i)
@@ -51,9 +66,9 @@ return function()
 
 	it("should call the predicate for each value", function()
 		local a = {
-			"avocado",
-			"grape",
-			"cucumber",
+			"foo",
+			"bar",
+			"baz",
 		}
 		local callCount = 0
 

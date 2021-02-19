@@ -1,10 +1,12 @@
+local Dictionary = script.Parent
+
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback)
 
 local function map(dictionary, mapper)
-	local dictionaryType = type(dictionary)
-	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
-	
-	local mapperType = type(mapper)
-	assert(mapperType == "function", "expected a function for second argument, got " .. mapperType)
+	assert(validate(dictionary, mapper))
 
 	local mapped = {}
 

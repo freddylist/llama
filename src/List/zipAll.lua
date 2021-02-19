@@ -1,13 +1,22 @@
+local List = script.Parent
 
-local None = require(script.Parent.Parent.None)
+local Llama = List.Parent
+local None = require(Llama.None)
+local t = require(Llama.t)
+
+local validate = t.table
 
 local function zipAll(...)
 	local new = {}
-	local argc = select('#', ...)
-	local maxLen = #select(1, ...)
+	local argCount = select('#', ...)
+	local maxLen = 0
 
-	for i = 2, argc do
-		local len = #select(i, ...)
+	for i = 1, argCount do
+		local list = select(i, ...)
+
+		assert(validate(list))
+
+		local len = #list
 
 		if len > maxLen then
 			maxLen = len
@@ -17,7 +26,7 @@ local function zipAll(...)
 	for i = 1, maxLen do
 		new[i] = {}
 		
-		for j = 1, argc do
+		for j = 1, argCount do
 			local value = select(j, ...)[i]
 
 			if value == nil then

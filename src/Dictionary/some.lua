@@ -1,7 +1,12 @@
+local Dictionary = script.Parent
+
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback)
 
 local function some(dictionary, predicate)
-	local predicateType = type(predicate)
-	assert(predicateType == "function", "expected a function for second argument, got " .. predicateType)
+	assert(validate(dictionary, predicate))
 
 	for k, v in pairs(dictionary) do
 		if predicate(v, k) then

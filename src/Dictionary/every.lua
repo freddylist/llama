@@ -1,10 +1,12 @@
+local Dictionary = script.Parent
+
+local Llama = Dictionary.Parent
+local t = require(Llama.t)
+
+local validate = t.tuple(t.table, t.callback)
 
 local function every(dictionary, predicate)
-	local dictionaryType = type(dictionary)
-	assert(dictionaryType == "table", "expected a table for first argument, got " .. dictionaryType)
-	
-	local predicateType = type(predicate)
-	assert(predicateType == "function", "expected a function for second argument, got " .. predicateType)
+	assert(validate(dictionary, predicate))
 	
 	for k, v in pairs(dictionary) do
 		if not predicate(v, k) then
