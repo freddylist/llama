@@ -5,11 +5,11 @@ return function()
 	local Llama = require(Packages.Llama)
 
 	local Dictionary = Llama.Dictionary
-	local removeKey = Dictionary.removeKey
+	local removeKeys = Dictionary.removeKeys
 
 	it("should validate types", function()
 		local _, err = pcall(function()
-			removeKey(0)
+			removeKeys(0)
 		end)
 
 		expect(string.find(err, "expected, got")).to.be.ok()
@@ -18,7 +18,7 @@ return function()
 	it("should return a new table", function()
 		local a = {}
 
-		expect(removeKey(a, "foo")).never.to.equal(a)
+		expect(removeKeys(a, "foo")).never.to.equal(a)
 	end)
 
 	it("should not mutate passed in tables", function()
@@ -35,20 +35,21 @@ return function()
 			end,
 		})
 
-		removeKey(a, "foo")
+		removeKeys(a, "foo")
 
 		expect(mutations).to.equal(0)
 	end)
 
-	it("should remove a single entry", function()
+	it("should remove multiple entries", function()
 		local a = {
 			foo = 1,
 			bar = 2,
 			baz = 3,
 		}
 
-		local b = removeKey(a, "baz")
+		local b = removeKeys(a, "bar", "baz")
 
+		expect(b.bar).never.to.be.ok()
 		expect(b.baz).never.to.be.ok()
 	end)
 
@@ -59,7 +60,7 @@ return function()
 		}
 
 		expect(function()
-			removeKey(a, "baz")
+			removeKeys(a, "baz")
 		end).never.to.throw()
 	end)
 end

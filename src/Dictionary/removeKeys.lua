@@ -6,14 +6,16 @@ local t = require(Llama.t)
 
 local validate = t.table
 
-local function removeKey(dictionary, key)
+local function removeKeys(dictionary, ...)
 	assert(validate(dictionary))
 	
 	local new = copy(dictionary)
 
-	new[key] = nil
+	for i = 1, select('#', ...) do
+		new[select(i, ...)] = nil
+	end
 
 	return new
 end
 
-return removeKey
+return removeKeys

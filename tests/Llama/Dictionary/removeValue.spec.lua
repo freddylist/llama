@@ -57,19 +57,6 @@ return function()
 		expect(b.baz).never.to.be.ok()
 	end)
 
-	it("should remove multiple values", function()
-		local a = {
-			foo = 1,
-			bar = 2,
-			baz = 3,
-		}
-
-		local b = removeValue(a, 2, 3)
-
-		expect(b.bar).never.to.be.ok()
-		expect(b.baz).never.to.be.ok()
-	end)
-
 	it("should work even if value does not exist", function()
 		local a = {
 			foo = 1,
