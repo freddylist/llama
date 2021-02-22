@@ -7,7 +7,7 @@ return function()
 	local None = Llama.None
 
 	local List = Llama.List
-	local concatenateDeep = List.concatenateDeep
+	local concat = List.concat
 
 	it("should validate types", function()
 		local args = {
@@ -17,7 +17,7 @@ return function()
 
 		for i = 1, #args do
 			local _, err = pcall(function()
-				concatenateDeep(unpack(args[i]))
+				concat(unpack(args[i]))
 			end)
 
 			expect(string.find(err, "expected, got")).to.be.ok()
@@ -27,7 +27,7 @@ return function()
 	it("should return a new table", function()
 		local a = {}
 
-		expect(concatenateDeep(a)).never.to.equal(a)
+		expect(concat(a)).never.to.equal(a)
 	end)
 
 	it("should not mutate passed in tables", function()
@@ -40,7 +40,7 @@ return function()
 			end,
 		})
 
-		concatenateDeep(a)
+		concat(a)
 
 		expect(mutations).to.equal(0)
 	end)
@@ -55,11 +55,11 @@ return function()
 			"foo-b"
 		}
 
-		local c = concatenateDeep(a, b)
+		local c = concat(a, b)
 
-		expect(#c).to.equal(2)
 		expect(c[1]).to.equal("foo-a")
 		expect(c[2]).to.equal("foo-b")
+		expect(c[3]).never.to.be.ok()
 	end)
 
 	it("should accept arbitrary numbers of tables", function()
@@ -67,7 +67,7 @@ return function()
 		local b = { 2 }
 		local c = { 3 }
 
-		local d = concatenateDeep(a, b, c)
+		local d = concat(a, b, c)
 
 		expect(#d).to.equal(3)
 		expect(d[1]).to.equal(1)
@@ -76,60 +76,23 @@ return function()
 	end)
 
 	it("should accept zero tables", function()
-		expect(concatenateDeep()).to.be.a("table")
+		expect(concat()).to.be.a("table")
 	end)
 
 	it("should accept holes in arguments", function()
 		local a = { 1 }
 		local b = { 2 }
 
-		local c = concatenateDeep(a, nil, b)
+		local c = concat(a, nil, b)
 
 		expect(#c).to.equal(2)
 		expect(c[1]).to.equal(1)
 		expect(c[2]).to.equal(2)
 
-		local d = concatenateDeep(nil, a, b)
+		local d = concat(nil, a, b)
 
 		expect(#d).to.equal(2)
 		expect(d[1]).to.equal(1)
 		expect(d[2]).to.equal(2)
-	end)
-
-	it("should join tables and copy subtables", function()
-		local a = {
-			"foo-a",
-			{
-				"bar-a",
-				{
-					"baz-a"
-				}
-			}
-		}
-
-		local b = {
-			"foo-b",
-			{
-				"bar-b",
-				{
-					"baz-b"
-				}
-			}
-		}
-
-		local c = concatenateDeep(a, b)
-
-		expect(c[1]).to.equal(a[1])
-		expect(c[2]).never.to.equal(a[2])
-		expect(c[3]).to.equal(b[1])
-		expect(c[4]).never.to.equal(b[2])
-
-		expect(c[2][1]).to.equal(a[2][1])
-		expect(c[2][2]).never.to.equal(a[2][2])
-		expect(c[4][1]).to.equal(b[2][1])
-		expect(c[4][2]).never.to.equal(b[2][2])
-		
-		expect(c[2][2][1]).to.equal(a[2][2][1])
-		expect(c[4][2][1]).to.equal(b[2][2][1])
 	end)
 end
