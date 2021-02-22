@@ -81,9 +81,7 @@ return function()
 			"qux",
 		}
 
-		local b = flatten(a, function(v)
-			return v
-		end)
+		local b = flatten(a)
 
 		for k, v in pairs(b) do
 			expect(v).to.equal(flattened[k])
@@ -110,9 +108,7 @@ return function()
 			4,
 		}
 
-		local b = flatten(a, function(v)
-			return v
-		end)
+		local b = flatten(a)
 
 		for k, v in pairs(b) do
 			expect(v).to.equal(flattened[k])
