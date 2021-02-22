@@ -1,0 +1,26 @@
+site_name: Llama
+site_url: https://f-rdy.github.io/llama/
+repo_name: F-RDY/llama
+repo_url: https://github.com/F-RDY/llama
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: red
+    accent: orange
+
+nav:
+  - Home: index.md
+  - Guide:
+    - Installation: guide/installation.md
+    - Usage: guide/usage.md
+  - API Reference: api-reference.md
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+  - pymdownx.superfences
