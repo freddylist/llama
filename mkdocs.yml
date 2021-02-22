@@ -1,7 +1,7 @@
 site_name: Llama
-site_url: https://f-rdy.github.io/llama/
-repo_name: F-RDY/llama
-repo_url: https://github.com/F-RDY/llama
+site_url: https://frelerik.github.io/llama/
+repo_name: Frelerik/llama
+repo_url: https://github.com/Frelerik/llama
 
 theme:
   name: material
