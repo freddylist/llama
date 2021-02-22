@@ -10,11 +10,11 @@ local function copyDeep(dictionary)
 	
 	local new = {}
 
-	for k, v in pairs(dictionary) do
-		if type(v) == "table" then
-			new[k] = copyDeep(v)
+	for key, value in pairs(dictionary) do
+		if type(value) == "table" then
+			new[key] = copyDeep(value)
 		else
-			new[k] = v
+			new[key] = value
 		end
 	end
 

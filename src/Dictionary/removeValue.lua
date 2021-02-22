@@ -5,18 +5,18 @@ local t = require(Llama.t)
 
 local validate = t.table
 
-local function removeValues(dictionary, value)
+local function removeValue(dictionary, valueToRemove)
 	assert(validate(dictionary))
 
 	local new = {}
 
-	for k, v in pairs(dictionary) do
-		if v ~= value then
-			new[k] = v
+	for key, value in pairs(dictionary) do
+		if value ~= valueToRemove then
+			new[key] = value
 		end
 	end
 
 	return new
 end
 
-return removeValues
+return removeValue

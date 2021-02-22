@@ -10,9 +10,9 @@ local function filter(dictionary, filterer)
 
 	local new = {}
 
-	for k, v in pairs(dictionary) do
-		if filterer(v, k) then
-			new[k] = v
+	for key, value in pairs(dictionary) do
+		if filterer(value, key) then
+			new[key] = value
 		end
 	end
 	

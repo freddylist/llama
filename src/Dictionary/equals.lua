@@ -8,14 +8,14 @@ local function compare(a, b)
 		return a == b
 	end
 
-	for k, v in pairs(a) do
-		if b[k] ~= v then
+	for key, value in pairs(a) do
+		if b[key] ~= value then
 			return false
 		end
 	end
 
-	for k, v in pairs(b) do
-		if a[k] ~= v then
+	for key, value in pairs(b) do
+		if a[key] ~= value then
 			return false
 		end
 	end

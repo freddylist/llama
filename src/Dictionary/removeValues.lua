@@ -8,20 +8,20 @@ local toSet = require(List.toSet)
 
 local validate = t.table
 
-local function removeValue(dictionary, ...)
+local function removeValues(dictionary, ...)
 	assert(validate(dictionary))
 	
 	local valuesSet = toSet({...})
 
 	local new = {}
 
-	for k, v in pairs(dictionary) do
-		if not valuesSet[v] then
-			new[k] = v
+	for key, value in pairs(dictionary) do
+		if not valuesSet[value] then
+			new[key] = value
 		end
 	end
 
 	return new
 end
 
-return removeValue
+return removeValues

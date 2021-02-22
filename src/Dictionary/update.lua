@@ -4,8 +4,8 @@ local copy = require(Dictionary.copy)
 local Llama = Dictionary.Parent
 local t = require(Llama.t)
 
-local function noUpdate(v)
-	return v
+local function noUpdate(value)
+	return value
 end
 
 local function call(callback, ...)

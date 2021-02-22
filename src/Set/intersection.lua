@@ -12,7 +12,7 @@ local function intersection(...)
 
 	assert(validate(firstSet))
 
-	for k, _ in pairs(firstSet) do
+	for key, _ in pairs(firstSet) do
 		local intersects = true
 
 		for i = 2, argCount do
@@ -20,14 +20,14 @@ local function intersection(...)
 
 			assert(validate(set))
 
-			if set[k] == nil then
+			if set[key] == nil then
 				intersects = false
 				break
 			end
 		end
 
 		if intersects then
-			new[k] = true
+			new[key] = true
 		end
 	end
 

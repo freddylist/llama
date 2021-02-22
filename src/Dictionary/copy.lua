@@ -10,8 +10,8 @@ local function copy(dictionary)
 	
 	local new = {}
 
-	for k, v in pairs(dictionary) do
-		new[k] = v
+	for key, value in pairs(dictionary) do
+		new[key] = value
 	end
 
 	return new

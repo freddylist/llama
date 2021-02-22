@@ -8,8 +8,8 @@ local validate = t.tuple(t.table, t.callback)
 local function every(dictionary, predicate)
 	assert(validate(dictionary, predicate))
 	
-	for k, v in pairs(dictionary) do
-		if not predicate(v, k) then
+	for key, value in pairs(dictionary) do
+		if not predicate(value, key) then
 			return false
 		end
 	end

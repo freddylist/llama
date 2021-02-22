@@ -12,8 +12,8 @@ local function values(dictionary)
 
 	local index = 1
 
-	for _, v in pairs(dictionary) do
-		valuesList[index] = v
+	for _, value in pairs(dictionary) do
+		valuesList[index] = value
 		index = index + 1
 	end
 

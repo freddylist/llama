@@ -8,14 +8,14 @@ local function compareDeep(a, b)
 		return a == b
 	end
 
-	for k, v in pairs(a) do
-		if not compareDeep(b[k], v) then
+	for key, value in pairs(a) do
+		if not compareDeep(b[key], value) then
 			return false
 		end
 	end
 
-	for k, v in pairs(b) do
-		if not compareDeep(a[k], v) then
+	for key, value in pairs(b) do
+		if not compareDeep(a[key], value) then
 			return false
 		end
 	end

@@ -1,21 +1,26 @@
 local Dictionary = script.Parent
-local join = require(Dictionary.join)
 
 local Llama = Dictionary.Parent
 local t = require(Llama.t)
 
-local validate = t.table
+local validate = t.tuple(t.table, t.optional(t.intersection(t.integer, t.numberMin(0))))
 
-local function flatten(dictionary)
-	assert(validate(dictionary))
+local function flatten(dictionary, depth)
+	assert(validate(dictionary, depth))
 	
 	local new = {}
 
-	for k, v in pairs(dictionary) do
-		if type(v) == "table" then
-			new = join(flatten(v), new)
+	for key, value in pairs(dictionary) do
+		if type(value) == "table" and (not depth or depth > 0) then
+			local subDictionary = flatten(value, depth and depth - 1)
+
+			for newKey, newValue in pairs(new) do
+				subDictionary[newKey] = newValue
+			end
+
+			new = subDictionary
 		else
-			new[k] = v
+			new[key] = value
 		end
 	end
 

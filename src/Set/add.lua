@@ -10,8 +10,8 @@ local function add(set, ...)
 
 	local new = {}
 
-	for k, _ in pairs(set) do
-		new[k] = true
+	for key, _ in pairs(set) do
+		new[key] = true
 	end
 
 	for i = 1, select('#', ...) do

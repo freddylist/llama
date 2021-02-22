@@ -8,8 +8,8 @@ local validate = t.tuple(t.table, t.callback)
 local function some(dictionary, predicate)
 	assert(validate(dictionary, predicate))
 
-	for k, v in pairs(dictionary) do
-		if predicate(v, k) then
+	for key, value in pairs(dictionary) do
+		if predicate(value, key) then
 			return true
 		end
 	end

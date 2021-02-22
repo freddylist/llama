@@ -13,8 +13,8 @@ local function union(...)
 
 		assert(validate(set))
 
-		for k, _ in pairs(set) do
-			new[k] = true
+		for key, _ in pairs(set) do
+			new[key] = true
 		end
 	end
 

@@ -16,8 +16,8 @@ local function count(dictionary, predicate)
 	
 	local counter = 0
 
-	for k, v in pairs(dictionary) do
-		if predicate(v, k) then
+	for key, value in pairs(dictionary) do
+		if predicate(value, key) then
 			counter = counter + 1
 		end
 	end
