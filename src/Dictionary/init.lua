@@ -6,7 +6,6 @@ local Dictionary = {
 	equalsDeep = require(script.equalsDeep),
 	every = require(script.every),
 	filter = require(script.filter),
-	flatMap = require(script.flatMap),
 	flatten = require(script.flatten),
 	flip = require(script.flip),
 	fromLists = require(script.fromLists),
