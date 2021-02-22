@@ -13,13 +13,13 @@ local function fromLists(keys, values)
 
 	assert(keysLen == #values, "lists must be same size")
 
-	local new = {}
+	local dictionary = {}
 
 	for i = 1, keysLen do
-		new[keys[i]] = values[i]
+		dictionary[keys[i]] = values[i]
 	end
 
-	return new
+	return dictionary
 end
 
 return fromLists

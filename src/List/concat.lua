@@ -8,7 +8,6 @@ local validate = t.table
 
 local function concat(...)
 	local new = {}
-
 	local index = 1
 
 	for listIndex = 1, select('#', ...) do

@@ -3,10 +3,10 @@ local t = require(Llama.t)
 
 local validate = t.table
 
-local function isEmpty(object)
-	assert(validate(object))
+local function isEmpty(table)
+	assert(validate(table))
 
-	return next(object) == nil
+	return next(table) == nil
 end
 
 return isEmpty
