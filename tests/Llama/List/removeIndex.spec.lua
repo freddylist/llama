@@ -59,6 +59,20 @@ return function()
 		expect(b[2]).to.equal("baz")
 	end)
 
+	it("should accept a 0 or negative index", function()
+		local a = {
+			"foo",
+			"bar",
+			"baz",
+		}
+
+		local b = removeIndex(a, -1)
+
+		expect(#b).to.equal(2)
+		expect(b[1]).to.equal("foo")
+		expect(b[2]).to.equal("baz")
+	end)
+
 	it("should work with a None element", function()
 		local a = {
 			"foo",

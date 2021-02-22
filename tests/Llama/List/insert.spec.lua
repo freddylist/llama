@@ -64,14 +64,6 @@ return function()
 		end).to.throw()
 	end)
 
-	it("should throw if the given index is lower than 1", function()
-		local a = {1}
-
-		expect(function()
-			insert(a, 0, {})
-		end).to.throw()
-	end)
-
 	it("should be able to insert a falsy value", function()
 		local tableElement = {}
 		local a = { tableElement, false, "value", true }

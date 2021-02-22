@@ -15,11 +15,18 @@ local function call(callback, ...)
 end
 
 local optionalCallbackType = t.optional(t.callback)
-local validate = t.tuple(t.table, t.intersection(t.integer, t.numberMin(1)), optionalCallbackType, optionalCallbackType)
+local validate = t.tuple(t.table, t.integer, optionalCallbackType, optionalCallbackType)
 
 local function update(list, index, updater, callback)
 	assert(validate(list, index, updater, callback))
-	assert(index <= #list + 1, "index out of bounds")
+
+	local len = #list
+
+	if index < 0 then
+		index = len + index
+	end
+
+	assert(index > 0 and index <= len + 1, string.format("index %d out of bounds of list of length %d", index, len))
 
 	updater = updater or noUpdate
 

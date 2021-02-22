@@ -3,14 +3,18 @@ local List = script.Parent
 local Llama = List.Parent
 local t = require(Llama.t)
 
-local validate = t.tuple(t.table, t.intersection(t.integer, t.numberMin(1)))
+local validate = t.tuple(t.table, t.integer)
 
 local function set(list, index, value)
 	assert(validate(list, index))
 	
 	local len = #list
 
-	assert(index <= len + 1, "index out of bounds")
+	if index < 0 then
+		index = len + index
+	end
+
+	assert(index > 0 and index <= len + 1, string.format("index %d out of bounds of list of length %d", index, len))
 
 	local new = {}
 	local indexNew = 1

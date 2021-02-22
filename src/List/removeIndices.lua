@@ -1,30 +1,36 @@
 local List = script.Parent
-local toSet = require(List.toSet)
 
 local Llama = List.Parent
 local t = require(Llama.t)
 
 local validateList = t.table
-local validateIndex = t.intersection(t.integer, t.numberMin(1))
+local validateIndex = t.integer
 
-local function removeIndex(list, ...)
+local function removeIndices(list, ...)
 	assert(validateList(list))
 
 	local len = #list
+	local indicesToRemove = {}
 
 	for i = 1, select('#', ...) do
 		local index = select(i, ...)
 		
-		assert(validateIndex(select(i, ...)))
-		assert(index <= len, "index out of bounds")
+		assert(validateIndex(index))
+
+		if index < 1 then
+			index = len + index
+		end
+
+		assert(index > 0 and index <= len, string.format("index %d out of bounds of list of length %d", index, len))
+
+		indicesToRemove[index] = true
 	end
 	
 	local new = {}
-	local removeIndices = toSet({...})
 	local index = 1
 
 	for i = 1, len do
-		if not removeIndices[i] then
+		if not indicesToRemove[i] then
 			new[index] = list[i]
 			index = index + 1
 		end
@@ -33,4 +39,4 @@ local function removeIndex(list, ...)
 	return new
 end
 
-return removeIndex
+return removeIndices

@@ -76,6 +76,17 @@ return function()
 		expect(findWhereLast(a, isTwo, 4)).to.equal(4)
 	end)
 
+	it("should accept a 0 or negative start index", function()
+		local a = { 1, 3, 3, 2, 3, 3, 2 }
+
+		local isTwo = function(value)
+			return value == 2
+		end
+
+		expect(findWhereLast(a, isTwo, -1)).to.equal(4)
+		expect(findWhereLast(a, isTwo, 0)).to.equal(7)
+	end)
+
 	it("should allow access to both value and index in the predicate function", function()
 		local a = { 1, 1, 2, 2, 1 }
 
