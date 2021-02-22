@@ -68,4 +68,4 @@ end
 Visit the [docs](https://f-rdy.github.io/llama/) for examples and API reference.
 
 ## What's in a name?
-Llamas are members of the Camelid group of mammals along with alpacas, camels, and dromedarys, which are known for being very stubborn but reliable animals.
+Llamas are members of the Camelid group of mammals along with alpacas, camels, and dromedaries, which are known for being very stubborn but reliable animals.
