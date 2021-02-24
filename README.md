@@ -71,5 +71,10 @@ end
 
 Visit the [docs](https://f-rdy.github.io/llama/) for examples and API reference.
 
+## Special Thanks
+
+- [Mathilde](https://www.instagram.com/httpsugars_/) for the Llama icon
+- [Llama's contributors](https://github.com/Frelerik/llama/graphs/contributors)
+
 ## What's in a name?
 Llamas are members of the Camelid group of mammals along with alpacas, camels, and dromedaries, which are known for being very stubborn but reliable animals.
