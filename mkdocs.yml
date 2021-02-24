@@ -5,6 +5,8 @@ repo_url: https://github.com/Frelerik/llama
 
 theme:
   name: material
+  icon: img/favicon.ico
+  logo: img/favicon.ico
   palette:
     scheme: slate
     primary: red
