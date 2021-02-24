@@ -7,6 +7,10 @@
 	Lua Library for Immutable Data
 </div>
 
+<div align="center">
+	<img src="docs/img/favicon.ico" width=256 height=256 alt="Llama"></img>
+</div>
+
 ## Installation
 
 There are a few ways to get started with Llama.
