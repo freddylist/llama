@@ -1053,7 +1053,7 @@ Returns a new list of `lists` "zipped" together. `zipAll` zips as much as possib
 local a = { "foo", "bar", "baz" }
 local b = { 1, 2, 3, 4 }
 
-Llama.List.zip(a, b)
+Llama.List.zipAll(a, b)
 ```
 
 *Results:*
