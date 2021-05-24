@@ -7,17 +7,17 @@ local validate = t.table
 
 local function copyDeep(list)
 	assert(validate(list))
-	
+
 	local new = {}
 
-	for i = 1, #list do
-		if type(list[i]) == "table" then
-			new[i] = copyDeep(list[i])
+	for i, v in ipairs(list) do
+		if type(v) == "table" then
+			new[i] = copyDeep(v)
 		else
-			new[i] = list[i]
+			new[i] = v
 		end
 	end
-	
+
 	return new
 end
 

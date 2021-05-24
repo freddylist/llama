@@ -16,16 +16,16 @@ local function concatDeep(...)
 
 		if list ~= nil then
 			assert(validate(list))
-			
-			for i = 1, #list do
-				if list[i] ~= None then
-					if type(list[i]) == "table" then
-						new[index] = copyDeep(list[i])
+
+			for _, v in ipairs(list) do
+				if v ~= None then
+					if type(v) == "table" then
+						new[index] = copyDeep(v)
 					else
-						new[index] = list[i]
+						new[index] = v
 					end
 
-					index = index + 1
+					index += 1
 				end
 			end
 		end

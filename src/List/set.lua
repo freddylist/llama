@@ -26,7 +26,7 @@ local function set(list, index, value)
 			new[indexNew] = list[i]
 		end
 
-		indexNew = indexNew + 1
+		indexNew += 1
 	end
 
 	return new

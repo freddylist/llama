@@ -8,13 +8,13 @@ local validate = t.table
 
 local function toSet(list)
 	assert(validate(list))
-	
+
 	local set = {}
 
-	for i = 1, #list do
-		set[list[i]] = true
+	for _, v in ipairs(list) do
+		set[v] = true
 	end
-	
+
 	return set
 end
 

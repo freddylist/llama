@@ -10,10 +10,10 @@ local function copy(list)
 
 	local new = {}
 
-	for i = 1, #list do
-		new[i] = list[i]
+	for i, v in ipairs(list) do
+		new[i] = v
 	end
-	
+
 	return new
 end
 

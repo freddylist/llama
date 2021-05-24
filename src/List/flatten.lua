@@ -11,16 +11,16 @@ local function flatten(list, depth)
 	local new = {}
 	local index = 1
 
-	for i = 1, #list do
-		if type(list[i]) == "table" and (not depth or depth > 0) then
-			local subList = flatten(list[i], depth and depth - 1)
+	for _, v in ipairs(list) do
+		if type(v) == "table" and (not depth or depth > 0) then
+			local subList = flatten(v, depth and depth - 1)
 
 			for j = 1, #subList do
 				new[index] = subList[j]
 				index = index + 1
 			end
 		else
-			new[index] = list[i]
+			new[index] = v
 			index = index + 1
 		end
 	end

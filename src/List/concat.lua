@@ -16,10 +16,10 @@ local function concat(...)
 		if list ~= nil then
 			assert(validate(list))
 
-			for i = 1, #list do
-				if list[i] ~= None then
-					new[index] = list[i]
-					index = index + 1
+			for _, v in ipairs(list) do
+				if v ~= None then
+					new[index] = v
+					index += 1
 				end
 			end
 		end
