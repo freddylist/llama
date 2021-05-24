@@ -24,7 +24,8 @@ There are a few ways to get started with Llama.
 
 1. Copy the `src` directory of Llama into your project.
 2. Rename it to `Llama`.
-3. Use something like [Rojo](https://github.com/rojo-rbx/rojo) to sync your project to Roblox Studio!
+3. Make sure you put [`t`](https://github.com/osyrisrblx/t) under the Llama directory. (this step will hopefully be resolved in the future by package managers or Luau type-checking)
+4. Use something like [Rojo](https://github.com/rojo-rbx/rojo) to sync your project to Roblox Studio!
 
 ### Method 3: Git submodule
 
