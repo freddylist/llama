@@ -7,14 +7,14 @@ local validate = t.table
 
 local function removeValue(list, value)
 	assert(validate(list))
-	
+
 	local new = {}
 	local index = 1
 
-	for i = 1, #list do
-		if list[i] ~= value then
-			new[index] = list[i]
-			index = index + 1
+	for _, v in ipairs(list) do
+		if v ~= value then
+			new[index] = v
+			index += 1
 		end
 	end
 

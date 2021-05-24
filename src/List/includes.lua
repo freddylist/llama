@@ -7,9 +7,9 @@ local validate = t.table
 
 local function includes(list, value)
 	assert(validate(list))
-	
-	for i = 1, #list do
-		if list[i] == value then
+
+	for _, v in ipairs(list) do
+		if v == value then
 			return true
 		end
 	end

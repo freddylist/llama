@@ -11,18 +11,18 @@ local function removeIndex(list, indexToRemove)
 	local len = #list
 
 	if indexToRemove < 1 then
-		indexToRemove = len + indexToRemove
+		indexToRemove += len
 	end
 
 	assert(indexToRemove > 0 and indexToRemove <= len, string.format("index %d out of bounds of list of length %d", indexToRemove, len))
-	
+
 	local new = {}
 	local index = 1
 
-	for i = 1, #list do
+	for i, v in ipairs(list) do
 		if i ~= indexToRemove then
-			new[index] = list[i]
-			index = index + 1
+			new[index] = v
+			index += 1
 		end
 	end
 

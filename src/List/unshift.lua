@@ -16,8 +16,8 @@ local function unshift(list, ...)
 		new[i] = select(i, ...)
 	end
 
-	for i = 1, #list do
-		new[argCount + i] = list[i]
+	for i, v in ipairs(list) do
+		new[argCount + i] = v
 	end
 
 	return new

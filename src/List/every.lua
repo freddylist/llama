@@ -7,9 +7,9 @@ local validate = t.tuple(t.table, t.callback)
 
 local function every(list, predicate)
 	assert(validate(list, predicate))
-	
-	for i = 1, #list do
-		if not predicate(list[i], i) then
+
+	for i, v in ipairs(list) do
+		if not predicate(v, i) then
 			return false
 		end
 	end

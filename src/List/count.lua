@@ -11,14 +11,14 @@ local validate = t.tuple(t.table, t.optional(t.callback))
 
 local function count(list, predicate)
 	assert(validate(list, predicate))
-	
+
 	predicate = predicate or alwaysTrue
-	
+
 	local counter = 0
 
-	for i = 1, #list do
-		if predicate(list[i], i) then
-			counter = counter + 1
+	for i, v in ipairs(list) do
+		if predicate(v, i) then
+			counter += 1
 		end
 	end
 
