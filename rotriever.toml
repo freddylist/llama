@@ -4,3 +4,7 @@ author = "Frelerik"
 content_root = "src"
 version = "1.1.0"
 license = "MIT"
+dependencies_root = "src"
+
+[dependencies]
+t = "https://github.com/osyrisrblx/t"
