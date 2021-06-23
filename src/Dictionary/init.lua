@@ -11,6 +11,7 @@ local Dictionary = {
 	fromLists = require(script.fromLists),
 	has = require(script.has),
 	includes = require(script.includes),
+	findKey = require(script.findKey),
 	join = require(script.merge),
 	joinDeep = require(script.mergeDeep),
 	keys = require(script.keys),
