@@ -1,7 +1,7 @@
 local Set = script.Parent
 
 local Llama = Set.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.tuple(t.table, t.callback)
 
@@ -15,7 +15,7 @@ local function filter(set, filterer)
 			new[key] = true
 		end
 	end
-	
+
 	return new
 end
 

@@ -1,8 +1,7 @@
-
 local Dictionary = script.Parent
 
 local Llama = Dictionary.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.tuple(t.table, t.table)
 

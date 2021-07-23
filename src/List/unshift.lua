@@ -1,14 +1,14 @@
 local List = script.Parent
 
 local Llama = List.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
 local function unshift(list, ...)
 	assert(validate(list))
 
-	local argCount = select('#', ...)
+	local argCount = select("#", ...)
 
 	local new = {}
 

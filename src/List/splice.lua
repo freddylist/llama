@@ -1,14 +1,14 @@
 local List = script.Parent
 
 local Llama = List.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local indexType = t.optional(t.integer)
 local validate = t.tuple(t.table, indexType, indexType)
 
 local function splice(list, from, to, ...)
 	assert(validate(list, from, to))
-	
+
 	local len = #list
 
 	from = from or 1
@@ -34,7 +34,7 @@ local function splice(list, from, to, ...)
 		index = index + 1
 	end
 
-	for i = 1, select('#', ...) do
+	for i = 1, select("#", ...) do
 		new[index] = select(i, ...)
 		index = index + 1
 	end

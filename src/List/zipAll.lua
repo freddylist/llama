@@ -2,13 +2,13 @@ local List = script.Parent
 
 local Llama = List.Parent
 local None = require(Llama.None)
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
 local function zipAll(...)
 	local new = {}
-	local argCount = select('#', ...)
+	local argCount = select("#", ...)
 	local maxLen = 0
 
 	for i = 1, argCount do
@@ -25,7 +25,7 @@ local function zipAll(...)
 
 	for i = 1, maxLen do
 		new[i] = {}
-		
+
 		for j = 1, argCount do
 			local value = select(j, ...)[i]
 

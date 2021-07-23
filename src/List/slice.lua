@@ -1,14 +1,14 @@
 local List = script.Parent
 
 local Llama = List.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local indexType = t.optional(t.integer)
 local validate = t.tuple(t.table, indexType, indexType)
 
 local function slice(list, from, to)
 	assert(validate(list, from, to))
-	
+
 	local len = #list
 
 	from = from or 1

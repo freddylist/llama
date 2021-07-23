@@ -1,7 +1,7 @@
 local Dictionary = script.Parent
 
 local Llama = Dictionary.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local function alwaysTrue()
 	return true
@@ -13,7 +13,7 @@ local function count(dictionary, predicate)
 	assert(validate(dictionary, predicate))
 
 	predicate = predicate or alwaysTrue
-	
+
 	local counter = 0
 
 	for key, value in pairs(dictionary) do

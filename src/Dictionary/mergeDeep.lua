@@ -3,14 +3,14 @@ local copyDeep = require(Dictionary.copyDeep)
 
 local Llama = Dictionary.Parent
 local None = require(script.Parent.Parent.None)
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
 local function mergeDeep(...)
 	local new = {}
 
-	for dictionaryIndex = 1, select('#', ...) do
+	for dictionaryIndex = 1, select("#", ...) do
 		local dictionary = select(dictionaryIndex, ...)
 
 		if dictionary ~= nil then

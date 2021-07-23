@@ -1,13 +1,13 @@
 local Set = script.Parent
 
 local Llama = Set.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
 local function intersection(...)
 	local new = {}
-	local argCount = select('#', ...)
+	local argCount = select("#", ...)
 	local firstSet = select(1, ...)
 
 	assert(validate(firstSet))

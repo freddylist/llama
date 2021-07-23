@@ -1,13 +1,13 @@
 local Set = script.Parent
 
 local Llama = Set.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
 local function fromList(list)
 	assert(validate(list))
-	
+
 	local set = {}
 
 	for i = 1, #list do

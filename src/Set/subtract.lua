@@ -1,7 +1,7 @@
 local Set = script.Parent
 
 local Llama = Set.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
@@ -14,7 +14,7 @@ local function subtract(set, ...)
 		new[key] = true
 	end
 
-	for i = 1, select('#', ...) do
+	for i = 1, select("#", ...) do
 		new[select(i, ...)] = nil
 	end
 

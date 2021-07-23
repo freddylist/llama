@@ -1,7 +1,7 @@
 local Dictionary = script.Parent
 
 local Llama = Dictionary.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local List = Llama.List
 local toSet = require(List.toSet)
@@ -10,8 +10,8 @@ local validate = t.table
 
 local function removeValues(dictionary, ...)
 	assert(validate(dictionary))
-	
-	local valuesSet = toSet({...})
+
+	local valuesSet = toSet({ ... })
 
 	local new = {}
 

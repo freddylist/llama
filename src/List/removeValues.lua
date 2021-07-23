@@ -2,14 +2,14 @@ local List = script.Parent
 local toSet = require(List.toSet)
 
 local Llama = List.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
 local function removeValue(list, ...)
 	assert(validate(list))
 
-	local valuesSet = toSet({...})
+	local valuesSet = toSet({ ... })
 	local new = {}
 	local index = 1
 

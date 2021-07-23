@@ -1,13 +1,13 @@
 local List = script.Parent
 
 local Llama = List.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.tuple(t.table, t.integer)
 
 local function set(list, index, value)
 	assert(validate(list, index))
-	
+
 	local len = #list
 
 	if index < 0 then

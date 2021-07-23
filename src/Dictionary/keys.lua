@@ -1,13 +1,13 @@
 local Dictionary = script.Parent
 
 local Llama = Dictionary.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
 local function keys(dictionary)
 	assert(validate(dictionary))
-	
+
 	local keysList = {}
 
 	local index = 1

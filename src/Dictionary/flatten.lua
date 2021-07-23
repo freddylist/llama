@@ -1,13 +1,13 @@
 local Dictionary = script.Parent
 
 local Llama = Dictionary.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.tuple(t.table, t.optional(t.intersection(t.integer, t.numberMin(0))))
 
 local function flatten(dictionary, depth)
 	assert(validate(dictionary, depth))
-	
+
 	local new = {}
 
 	for key, value in pairs(dictionary) do

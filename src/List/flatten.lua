@@ -1,13 +1,13 @@
 local List = script.Parent
 
 local Llama = List.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.tuple(t.table, t.optional(t.intersection(t.integer, t.numberMin(0))))
 
 local function flatten(list, depth)
 	assert(validate(list))
-	
+
 	local new = {}
 	local index = 1
 

@@ -1,7 +1,7 @@
 local List = script.Parent
 
 local Llama = List.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.tuple(t.table, t.integer)
 
@@ -14,7 +14,10 @@ local function removeIndex(list, indexToRemove)
 		indexToRemove += len
 	end
 
-	assert(indexToRemove > 0 and indexToRemove <= len, string.format("index %d out of bounds of list of length %d", indexToRemove, len))
+	assert(
+		indexToRemove > 0 and indexToRemove <= len,
+		string.format("index %d out of bounds of list of length %d", indexToRemove, len)
+	)
 
 	local new = {}
 	local index = 1

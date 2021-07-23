@@ -1,14 +1,14 @@
 local Set = script.Parent
 
 local Llama = Set.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.table
 
 local function union(...)
 	local new = {}
 
-	for i = 1, select('#', ...) do
+	for i = 1, select("#", ...) do
 		local set = select(i, ...)
 
 		assert(validate(set))

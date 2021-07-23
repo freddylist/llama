@@ -1,7 +1,7 @@
 local List = script.Parent
 
 local Llama = List.Parent
-local t = require(Llama.t)
+local t = require(Llama.Parent.t)
 
 local validate = t.tuple(t.table, t.optional(t.intersection(t.integer, t.numberMin(0))))
 
@@ -12,7 +12,10 @@ local function pop(list, numPops)
 
 	numPops = numPops or 1
 
-	assert(numPops > 0 and numPops <= len + 1, string.format("index %d out of bounds of list of length %d", numPops, len))
+	assert(
+		numPops > 0 and numPops <= len + 1,
+		string.format("index %d out of bounds of list of length %d", numPops, len)
+	)
 
 	local new = {}
 
