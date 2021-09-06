@@ -1,6 +1,6 @@
 [package]
 name = "llama"
-author = "Frelerik"
+author = "Freddylist"
 content_root = "src"
 version = "1.1.0"
 license = "MIT"
