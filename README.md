@@ -1,7 +1,7 @@
 <h1 align="center">📚 Llama 🦙</h1>
 <div align="center">
-	<a href="https://github.com/Frelerik/llama/actions"><img src="https://github.com/Frelerik/llama/workflows/CI/badge.svg" alt="GitHub Actions Build Status" /></a>
-	<a href="https://frelerik.github.io/llama"><img src="https://img.shields.io/badge/docs-website-green.svg" alt="Documentation" /></a>
+	<a href="https://github.com/freddylist/llama/actions"><img src="https://github.com/freddylist/llama/workflows/CI/badge.svg" alt="GitHub Actions Build Status" /></a>
+	<a href="https://freddylist.github.io/llama"><img src="https://img.shields.io/badge/docs-website-green.svg" alt="Documentation" /></a>
 </div>
 <div align="center">
 	Lua Library for Immutable Data
@@ -70,12 +70,12 @@ local function reducer(state, action)
 end
 ```
 
-Visit the [docs](https://frelerik.github.io/llama/) for examples and API reference.
+Visit the [docs](https://freddylist.github.io/llama/) for examples and API reference.
 
 ## Special Thanks
 
 - [Mathilde](https://www.instagram.com/httpsugars_/) for the Llama icon
-- [Llama's contributors](https://github.com/Frelerik/llama/graphs/contributors)
+- [Llama's contributors](https://github.com/freddylist/llama/graphs/contributors)
 
 ## What's in a name?
 Llamas are members of the Camelid group of mammals along with alpacas, camels, and dromedaries, which are known for being very stubborn but reliable animals.
