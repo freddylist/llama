@@ -1,7 +1,7 @@
 site_name: Llama
 site_url: https://freddylist.github.io/llama/
-repo_name: Freddylist/llama
-repo_url: https://github.com/Freddylist/llama
+repo_name: freddylist/llama
+repo_url: https://github.com/freddylist/llama
 
 theme:
   name: material
