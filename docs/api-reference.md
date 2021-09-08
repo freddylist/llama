@@ -1150,7 +1150,7 @@ Returns the last index from `from` if provided for which `list` has `value`. If 
 #### `findWhere`
 
 ```
-Llama.List.findWhere(list, value, predicate[, from]) -> index
+Llama.List.findWhere(list, predicate[, from]) -> index
 ```
 
 Returns the first index from `from` if provided for which `list`'s value satisfies `predicate`. If `from` is 0 or negative, `findWhere` searches from `from` relative to the end of `list`.
@@ -1166,7 +1166,7 @@ predicate(value, index) -> result
 #### `findWhereLast`
 
 ```
-Llama.List.findWhereLast(list, value, predicate[, from]) -> index
+Llama.List.findWhereLast(list, predicate[, from]) -> index
 ```
 
 Returns the last index from `from` if provided for which `list`'s value satisfies `predicate`. If `from` is 0 or negative, `findWhereLast` searches from `from` relative to the end of `list`.
