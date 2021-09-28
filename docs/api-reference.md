@@ -306,7 +306,7 @@ filterer(value, key) -> result
 local dictionary = {
 	foo1 = "foo",
 	foo2 = "foo",
-	bar = "foo",
+	bar1 = "bar",
 }
 
 local function onlyFoo(value)
