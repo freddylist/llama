@@ -1,6 +1,9 @@
 [package]
 name = "freddylist/llama"
+description = "Luau Library for Immutable Data"
 version = "1.1.0"
-registry = "https://github.com/UpliftGames/wally-index"
+license = "MIT"
+authors = ["Frederik List <51757856+freddylist@users.noreply.github.com>"]
 realm = "shared"
+registry = "https://github.com/UpliftGames/wally-index"
 include = ["default.project.json", "src"]
