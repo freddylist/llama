@@ -7,10 +7,7 @@
 			"Packages": {
 				"$className": "Folder",
 				"Llama": {
-					"$path": "src",
-					"t": {
-						"$path": "modules/t/lib"
-					}
+					"$path": "src"
 				},
 				"TestEZ": {
 					"$path": "modules/testez/src"
