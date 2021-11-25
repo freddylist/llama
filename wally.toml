@@ -1,7 +1,7 @@
 [package]
 name = "freddylist/llama"
 description = "Luau Library for Immutable Data"
-version = "1.1.0"
+version = "1.1.1"
 license = "MIT"
 authors = ["Frederik List <51757856+freddylist@users.noreply.github.com>"]
 realm = "shared"
