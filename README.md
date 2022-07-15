@@ -1,5 +1,10 @@
 ## ⚠️ No longer maintained ⚠️
 
+**Alternatives**:
+- [Sift](https://github.com/csqrl/sift)
+
+---
+
 Hello all! Since I do not do much Roblox game development these days (among other reasons), I will no longer be maintaining Llama.
 
 Thank you to all of Llama's contributors, and I am verry sorry for any inconveniences I have caused.
