@@ -9,6 +9,7 @@ local Dictionary = {
 	flatten = require(script.flatten),
 	flip = require(script.flip),
 	fromLists = require(script.fromLists),
+	getIn = require(script.getIn),
 	has = require(script.has),
 	includes = require(script.includes),
 	join = require(script.merge),
@@ -19,11 +20,14 @@ local Dictionary = {
 	mergeDeep = require(script.mergeDeep),
 	removeKey = require(script.removeKey),
 	removeKeys = require(script.removeKeys),
+	removeIn = require(script.removeIn),
 	removeValue = require(script.removeValue),
 	removeValues = require(script.removeValues),
 	set = require(script.set),
+	setIn = require(script.setIn),
 	some = require(script.some),
 	update = require(script.update),
+	updateIn = require(script.updateIn),
 	values = require(script.values),
 }
 
